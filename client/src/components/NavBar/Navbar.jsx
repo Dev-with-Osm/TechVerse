@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { navigation } from './Constants';
-import { IoCloseOutline, IoPersonOutline } from 'react-icons/io5';
-import { IoIosArrowDown, IoIosSearch } from 'react-icons/io';
+import { IoCloseOutline } from 'react-icons/io5';
 import { CgMenuLeftAlt } from 'react-icons/cg';
 import OutsideClickHandler from 'react-outside-click-handler';
+import UserActions from './components/UserActions';
+import SearchBarForResponsive from './components/SearchBarForResponsive';
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
-  const [menu, setMenu] = useState(false);
 
   return (
     <div className="shadow-sm text-white">
@@ -38,42 +38,7 @@ export default function Navbar() {
         </ul>
         <OutsideClickHandler onOutsideClick={() => setNav(false)}>
           {/* Mobile Navigation */}
-          <div className="">
-            <div
-              className="flex text-[#ccd0cf] text-2xl"
-              onClick={() => setMenu(menu ? false : true)}
-            >
-              <IoPersonOutline />
-              <IoIosArrowDown />
-            </div>
-            {/* this div */}
-            {menu && (
-              <div className="bg-transparent absolute right-0 mt-5 mr-5 2xl:mr-40">
-                <div
-                  className="flex items-center justify-center flex-col rounded-md "
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.2',
-                  }}
-                >
-                  <a
-                    href=""
-                    className="px-8 py-2 hover:text-slate-400 hover:underline-offset-2 hover:underline"
-                  >
-                    Sign In
-                  </a>
-                  <a
-                    href=""
-                    className="px-8 py-2 hover:text-slate-400 hover:underline-offset-2 hover:underline"
-                  >
-                    Sign Up
-                  </a>
-                </div>
-              </div>
-            )}
-
-            {/* this div */}
-          </div>
-
+          <UserActions />
           <ul
             className={
               nav
@@ -82,17 +47,7 @@ export default function Navbar() {
             }
           >
             {/* Mobile Logo */}
-            <div className="flex justify-center items-center relative max-w-48 mx-auto mt-10">
-              <div className="absolute right-0 text-2xl">
-                <IoIosSearch />
-              </div>
-
-              <input
-                type="text"
-                placeholder="Search..."
-                className="p-2 rounded-md border-primary-dark border-2 bg-transparent outline-none placeholder:text-primary-dark"
-              />
-            </div>
+            <SearchBarForResponsive />
 
             {/* Mobile Navigation Items */}
             <div className="mt-5">
