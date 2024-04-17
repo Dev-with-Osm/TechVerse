@@ -66,25 +66,4 @@ body {
     );
   background-size: 55px 55px;
 }
-.cursor-dot {
-  height: 7px;
-  width: 7px;
-  background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 1;
-  pointer-events: none;
-}
 
-.rotateimg {
-  animation: spin 40s linear infinite;
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
-}
