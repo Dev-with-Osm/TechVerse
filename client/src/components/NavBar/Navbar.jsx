@@ -42,8 +42,8 @@ export default function Navbar() {
           <ul
             className={
               nav
-                ? 'fixed flex flex-col md:hidden left-0 top-16 z-50 w-[60%] h-[100vh] shadow-md text-primary-dark bg-text-secondary ease-in-out duration-500 '
-                : 'ease-in-out flex flex-col  w-[60%] duration-500 fixed top-16 bottom-0 left-[-100%] '
+                ? 'fixed flex flex-col md:hidden left-0 top-0 z-[99] w-[60%] h-[100vh] shadow-md text-primary-dark container ease-in-out duration-500 '
+                : 'ease-in-out flex flex-col  w-[60%] z-[99] duration-500 fixed top-0 bottom-0 left-[-100%] '
             }
           >
             {/* Mobile Logo */}

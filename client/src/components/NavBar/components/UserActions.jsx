@@ -24,12 +24,7 @@ export default function UserActions() {
           menu ? 'block' : 'hidden'
         } bg-transparent absolute right-0 mt-5 mr-5 2xl:mr-40`}
       >
-        <div
-          className="flex items-center justify-center flex-col rounded-md"
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.2',
-          }}
-        >
+        <div className="flex items-center justify-center flex-col rounded-md border-white border backdrop-blur-xl">
           <a
             href=""
             className="px-8 py-2 hover:text-slate-400 hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
