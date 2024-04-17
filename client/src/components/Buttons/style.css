@@ -27,7 +27,7 @@
   color: var(--default-btn-color);
   font: var(--font-weight) var(--font-size) var(--font-family);
   background: var(--btn-default-bg);
-  border: none;
+  border: 1px solid rgb(204, 208, 207);
   cursor: pointer;
   transition: var(--btn-transition);
   overflow: hidden;
