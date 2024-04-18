@@ -47,10 +47,10 @@ export default function Navbar() {
             }
           >
             {/* Mobile Logo */}
-            <SearchBarForResponsive />
-
             {/* Mobile Navigation Items */}
             <div className="mt-5">
+              <SearchBarForResponsive />
+
               {navigation.map((item) => (
                 <li
                   key={item.id}

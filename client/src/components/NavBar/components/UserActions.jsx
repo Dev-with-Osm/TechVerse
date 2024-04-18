@@ -1,14 +1,15 @@
 import React from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoPersonOutline } from 'react-icons/io5';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 export default function UserActions() {
   const [menu, setMenu] = React.useState(false);
 
   return (
-    <div className="cursor-pointer">
+    <OutsideClickHandler onOutsideClick={() => setMenu(false)}>
       <div
-        className="flex text-[#ccd0cf] text-2xl"
+        className="flex text-[#ccd0cf] text-2xl cursor-pointer"
         onClick={() => setMenu((prevState) => !prevState)}
       >
         <IoPersonOutline />
@@ -27,19 +28,19 @@ export default function UserActions() {
         <div className="flex items-center justify-center flex-col rounded-md border-white border backdrop-blur-xl">
           <a
             href=""
-            className="px-8 py-2 hover:text-slate-400 hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
+            className="px-8 py-2 hover:text-text hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
           >
             Sign In
           </a>
           <a
             href=""
-            className="px-8 py-2 hover:text-slate-400 hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
+            className="px-8 py-2 hover:text-text hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
           >
             Sign Up
           </a>
         </div>
       </div>
       {/* this div */}
-    </div>
+    </OutsideClickHandler>
   );
 }

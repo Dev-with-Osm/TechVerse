@@ -4,8 +4,8 @@ import homeVid from '../../../../assets/animations/Animation - 1713375383072.jso
 
 export default function RightHomePage() {
   return (
-    <div className="relative flex flex-1 items-center justify-center ">
-      <Lottie animationData={homeVid} className="w-4/5" />
+    <div className="flex flex-1 items-center justify-center">
+      <Lottie animationData={homeVid} className="w-5/6" />
     </div>
   );
 }
