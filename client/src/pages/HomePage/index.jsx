@@ -1,7 +1,7 @@
-import { IoPerson } from 'react-icons/io5';
 import CursorAnimation from './components/CursorAnimation';
 import LeftHomePage from './components/LeftHomePage';
 import RightHomePage from './components/RightHomePage';
+import Statistics from './components/Statistics';
 
 export default function HomePage() {
   return (
@@ -11,29 +11,7 @@ export default function HomePage() {
         <LeftHomePage />
         <RightHomePage />
       </div>
-      {/* <div className="flex justify-around items-center">
-        <div className="flex flex-col">
-          <h1 className="text-4xl">+ 1984</h1>
-          <div className="flex justify-center items-center gap-1.5">
-            <IoPerson className="text-3xl" />
-            <p className="text-2xl">User</p>
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <h1 className="text-4xl">+ 1984</h1>
-          <div className="flex justify-center items-center gap-1.5">
-            <IoPerson className="text-3xl" />
-            <p className="text-2xl">User</p>
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <h1 className="text-4xl">+ 1984</h1>
-          <div className="flex justify-center items-center gap-1.5">
-            <IoPerson className="text-3xl" />
-            <p className="text-2xl">User</p>
-          </div>
-        </div>
-      </div> */}
+      <Statistics />
     </div>
   );
 }
