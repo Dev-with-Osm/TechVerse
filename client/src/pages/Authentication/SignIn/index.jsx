@@ -75,7 +75,7 @@ export default function SignInPage() {
               <input
                 type="email"
                 placeholder="example@example.com"
-                className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.email && 'border-red-500'
                 }`}
                 name="email"
@@ -101,7 +101,7 @@ export default function SignInPage() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Secret Password"
-                className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.password && 'border-red-500'
                 }`}
                 name="password"

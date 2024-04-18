@@ -89,7 +89,7 @@ export default function SignUpPage() {
                 <IoPersonOutline className="absolute text-lg mt-3 ml-3" />
                 <input
                   type="text"
-                  className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                  className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                     errors.firstName && 'border-red-500'
                   }`}
                   placeholder="First Name"
@@ -110,7 +110,7 @@ export default function SignUpPage() {
                 <IoPersonOutline className="absolute text-lg mt-3 ml-3" />
                 <input
                   type="text"
-                  className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                  className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                     errors.lastName && 'border-red-500'
                   }`}
                   placeholder="Last Name"
@@ -131,7 +131,7 @@ export default function SignUpPage() {
               <input
                 type="email"
                 placeholder="example@example.com"
-                className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.email && 'border-red-500'
                 }`}
                 name="email"
@@ -157,7 +157,7 @@ export default function SignUpPage() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Secret Password"
-                className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.password && 'border-red-500'
                 }`}
                 name="password"
@@ -183,7 +183,7 @@ export default function SignUpPage() {
               <input
                 type={showConfirmedPassword ? 'text' : 'password'}
                 placeholder="Confirm secret Password"
-                className={`border border-text-secondary bg-transparent hover:border-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.confirmPassword && 'border-red-500'
                 }`}
                 name="confirmPassword"
