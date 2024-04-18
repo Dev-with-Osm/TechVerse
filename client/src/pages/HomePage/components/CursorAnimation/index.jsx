@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react'
-import './style.css'
+import React, { useEffect, useRef } from 'react';
+import './style.css';
 
-export default function CursorAnimation() {
-    const cursorDotRef = useRef(null);
+export default function CursorAnimation(props) {
+  const cursorDotRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -17,6 +17,9 @@ export default function CursorAnimation() {
     };
   }, []);
   return (
-    <div ref={cursorDotRef} className="hidden md:block cursor-dot"></div>
-  )
+    <div
+      ref={cursorDotRef}
+      className={props.className + ' hidden md:block cursor-dot'}
+    ></div>
+  );
 }

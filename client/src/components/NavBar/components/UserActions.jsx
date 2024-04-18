@@ -20,28 +20,27 @@ export default function UserActions() {
           }`}
         />
       </div>
-      {/* this div */}
+
       <div
         className={`transition-all duration-500 ease-in-out ${
           menu ? 'block' : 'hidden'
-        } bg-transparent absolute right-0 mt-5 mr-5 2xl:mr-40`}
+        } bg-transparent z-10 absolute right-0 mt-5 mr-5 2xl:mr-40`}
       >
         <div className="flex items-center justify-center flex-col rounded-md border-white border backdrop-blur-xl">
           <Link
             to={'/sign-in'}
-            className="px-8 py-2 hover:text-text hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
+            className="px-8 py-2.5 hover:text-text hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
           >
             Sign In
           </Link>
           <Link
             to={'/sign-up'}
-            className="px-8 py-2 hover:text-text hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
+            className="px-8 py-2.5 hover:text-text hover:underline-offset-2 hover:underline transition-all duration-200 ease-in-out"
           >
             Sign Up
           </Link>
         </div>
       </div>
-      {/* this div */}
     </OutsideClickHandler>
   );
 }
