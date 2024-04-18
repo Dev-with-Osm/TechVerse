@@ -1,13 +1,19 @@
 import React from 'react';
 import Navbar from './components/NavBar/Navbar';
 import HomePage from './pages/HomePage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import SignInPage from './pages/Authentication/SignIn';
+import SignUpPage from './pages/Authentication/SignUp';
 
 export default function App() {
   return (
-    <>
-    
+    <BrowserRouter>
       <Navbar />
-      <HomePage />
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
