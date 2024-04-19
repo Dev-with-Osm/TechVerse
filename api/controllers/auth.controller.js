@@ -5,7 +5,7 @@ const User = require('../models/user.model.js');
 
 const createNewUser = asyncHandler(async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     // check if user already exist
     const existedUser = await User.findOne({ email });
     if (existedUser) throw new Error('User Already exist');
@@ -17,7 +17,15 @@ const createNewUser = asyncHandler(async (req, res) => {
       ...req.body,
       password: hashedPassword,
     });
-    res.status(201).json(newUser);
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: '1d',
+    });
+
+    res
+      .cookie('access_token', token, { maxAge: 86400000, httpOnly: true })
+      .status(201)
+      .json(newUser);
   } catch (error) {
     throw new Error(error);
   }

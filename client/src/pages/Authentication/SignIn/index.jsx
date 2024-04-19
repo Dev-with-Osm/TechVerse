@@ -9,15 +9,26 @@ import handWave from '../../../assets/animations/Animation - 1713426469054.json'
 import Lottie from 'lottie-react';
 import FromLabel from '../components/Label';
 import { Link } from 'react-router-dom';
+import ConfirmationModal from '../../../components/confirmationModal';
+import done from '../../../assets/animations/Animation - 17135345566734.json';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from '../../../redux/user/userSlice.js';
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+  const { error, loading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [showPopup, setShowPopup] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  console.log(formData);
+  // console.log(formData);
   const [errors, setErrors] = useState({
     email: '',
     password: '',
@@ -31,7 +42,7 @@ export default function SignInPage() {
     });
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     // Validate form inputs
     const newErrors = {};
@@ -48,12 +59,55 @@ export default function SignInPage() {
     // If there are no errors, proceed with sign-up
     if (Object.keys(newErrors).length === 0) {
       // Perform sign-up action
-      console.log('Signing up...');
+      dispatch(signInStart());
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        // If there is an error, display it
+        if (data.success === false) {
+          dispatch(signInFailure(data.message));
+          return;
+        }
+        // If there is no error, redirect to the home page
+        dispatch(signInSuccess(data));
+        setShowPopup(true);
+      } catch (error) {
+        dispatch(signInFailure(error.message));
+      }
     }
   };
 
   return (
     <div className="flex items-center justify-center mt-10 p-4">
+      {showPopup && (
+        <ConfirmationModal open={showPopup}>
+          <div className="text-center ">
+            <Lottie animationData={done} className=" w-40 mx-auto" />
+            <div className="mx-auto my-4">
+              <h3 className="text-lg font-black text-green-400">
+                Login successfully done
+              </h3>
+              <h3 className="text-lg font-black text-black">
+                welcome back to the community
+              </h3>
+            </div>
+            <div className="flex gap-4 items-center justify-center">
+              <Link
+                to={'/'}
+                className="bg-black/90 p-3 rounded-lg hover:bg-black/70"
+              >
+                continue
+              </Link>
+            </div>
+          </div>
+        </ConfirmationModal>
+      )}
       <div className="border border-white rounded-md backdrop-blur-md w-full md:w-auto p-3 px-5">
         <div className="flex flex-col items-center">
           <div className="text-sm flex items-center">
@@ -75,7 +129,8 @@ export default function SignInPage() {
               <input
                 type="email"
                 placeholder="example@example.com"
-                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                disabled={loading}
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full disabled:cursor-not-allowed  placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.email && 'border-red-500'
                 }`}
                 name="email"
@@ -101,7 +156,8 @@ export default function SignInPage() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Secret Password"
-                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
+                disabled={loading}
+                className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 disabled:cursor-not-allowed outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
                   errors.password && 'border-red-500'
                 }`}
                 name="password"
@@ -119,8 +175,9 @@ export default function SignInPage() {
               type="submit"
               className="bg-primary hover:border-[#755d8c] transition-all duration-300 ease-in-out py-2 w-full rounded-full text-black text-xl font-semibold hover:bg-text"
             >
-              Sign In
+              {loading ? 'Sign In...' : 'Sign In'}
             </button>
+            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
             <p className="text-[11px] text-right">
               Don't have an account{' '}
               <Link

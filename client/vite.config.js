@@ -7,5 +7,11 @@ export default defineConfig({
   server: {
     // host: '192.168.11.101',
     port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        secure: false,
+      },
+    },
   },
 });
