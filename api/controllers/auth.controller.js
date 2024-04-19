@@ -47,11 +47,49 @@ const loginUser = asyncHandler(async (req, res) => {
       expiresIn: '1d',
     });
 
-    const { password: pass, ...others } = user._doc;
+    const { password: pass, ...rest } = user._doc;
     res
       .cookie('access_token', token, { maxAge: 86400000, httpOnly: true })
       .status(200)
-      .json(others);
+      .json(rest);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+//login with google
+const loginWithGoogle = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+      const { password: pass, ...rest } = user._doc;
+      res
+        .cookie('access_token', token, { httpOnly: true })
+        .status(200)
+        .json(rest);
+    } else {
+      // generate password for user to avoid getting an error
+      const generatedPass =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+
+      const hashPassword = bcrypt.hashSync(generatedPass, 10);
+      const newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: hashPassword,
+        avatar: req.body.avatar,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+      const { password: pass, ...rest } = newUser._doc;
+      res
+        .cookie('access_token', token, { httpOnly: true })
+        .status(200)
+        .json(rest);
+    }
   } catch (error) {
     throw new Error(error);
   }
@@ -66,4 +104,4 @@ const logOutUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createNewUser, loginUser, logOutUser };
+module.exports = { createNewUser, loginUser, logOutUser, loginWithGoogle };
