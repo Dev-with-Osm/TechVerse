@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { IoLockClosedOutline, IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineMailOutline } from 'react-icons/md';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
+
 import { PiEyeLight, PiEyeSlash } from 'react-icons/pi';
 
 import handWave from '../../../assets/animations/Animation - 1713426469054.json';
@@ -17,6 +16,7 @@ import {
   signInStart,
   signInSuccess,
 } from '../../../redux/user/userSlice';
+import GoogleAuth from '../OAuth/GoogleAuth';
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -282,20 +282,7 @@ export default function SignUpPage() {
               <div className="h-[0.5px] w-1/4 bg-text-secondary"></div>
             </div>
             <div className="mt-2 flex items-center gap-10 w-full">
-              <button
-                type="button"
-                className=" w-full hover:border-[#755d8c] transition-all duration-300 ease-in-out h-10 rounded-lg flex justify-center items-center font-medium gap-2.5 border border-primary"
-              >
-                <FcGoogle />
-                Google
-              </button>
-              <button
-                type="button"
-                className="w-full hover:border-[#755d8c] transition-all duration-300 ease-in-out h-10 rounded-lg flex justify-center items-center font-medium gap-2.5 border border-primary"
-              >
-                <FaGithub />
-                GitHub
-              </button>
+              <GoogleAuth />
             </div>
           </div>
         </form>

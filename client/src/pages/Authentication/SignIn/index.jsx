@@ -17,7 +17,6 @@ import {
   signInSuccess,
 } from '../../../redux/user/userSlice.js';
 import GoogleAuth from '../OAuth/GoogleAuth/index.jsx';
-import GithubAuth from '../OAuth/GithubAuth/index.jsx';
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -194,7 +193,6 @@ export default function SignInPage() {
             </div>
             <div className="mt-2 flex items-center gap-10 w-full">
               <GoogleAuth />
-              <GithubAuth />
             </div>
           </div>
         </form>
