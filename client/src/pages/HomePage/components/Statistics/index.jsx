@@ -12,36 +12,36 @@ export default function Statistics() {
         <div className="flex justify-center items-center flex-col gap-1.5">
           <div className="flex items-center gap-2">
             <IoPerson className="text-3xl" />
-            <h1 className="text-2xl md:text-4xl font-medium">
+            <h1 className="text-xl md:text-3xl font-medium">
               <CountUp end={1038} duration={5} /> +
             </h1>
           </div>
 
-          <p className="text-2xl font-medium">user</p>
+          <p className="text-xl font-medium">user</p>
         </div>
       </div>
       <div className="flex flex-col">
         <div className="flex justify-center items-center flex-col gap-1.5">
           <div className="flex items-center gap-2">
-            <BsFilePost className="text-3xl" />
-            <h1 className="text-2xl md:text-4xl font-medium">
+            <BsFilePost className="text-2xl" />
+            <h1 className="text-xl md:text-3xl font-medium">
               <CountUp end={3084} duration={5} /> +
             </h1>
           </div>
 
-          <p className="text-2xl font-medium">posts</p>
+          <p className="text-xl font-medium">posts</p>
         </div>
       </div>
       <div className="flex flex-col">
         <div className="flex justify-center items-center flex-col gap-1.5">
           <div className="flex items-center gap-2">
-            <RiHashtag className="text-3xl" />
-            <h1 className="text-2xl md:text-4xl font-medium">
+            <RiHashtag className="text-2xl" />
+            <h1 className="text-xl md:text-3xl font-medium">
               <CountUp end={74} duration={5} /> +
             </h1>
           </div>
 
-          <p className="text-2xl font-medium">tag</p>
+          <p className="text-xl font-medium">tag</p>
         </div>
       </div>
     </div>
