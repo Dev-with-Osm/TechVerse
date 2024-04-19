@@ -1,21 +1,21 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const dbConn = require('./config/dbConnection');
+const authRouter = require('./routes/auth.route.js');
+const { notFound, errorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express();
-
-// Middleware
+dbConn();
 app.use(express.json());
 
-dbConn();
-
-app.get('/', (req, res) => {
-  res.send('hello wolrd');
-});
-
+// Middleware
 const port = 4000;
+
+app.use('/api/auth', authRouter);
+
+app.use(notFound);
+app.use(errorHandler);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-// mongodb+srv://khourssaoussama7:5rCkuNy1MXfVA8I0@cluster0.lduiqsc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
