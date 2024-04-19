@@ -98,7 +98,7 @@ const loginWithGoogle = asyncHandler(async (req, res) => {
 //logout user
 const logOutUser = asyncHandler(async (req, res) => {
   try {
-    res.clearCookie('access_token').json('User LoggedOut');
+    res.clearCookie('access_token').json('Logged out successfully');
   } catch (error) {
     throw new Error(error);
   }

@@ -5,6 +5,7 @@ import { CgMenuLeftAlt } from 'react-icons/cg';
 import OutsideClickHandler from 'react-outside-click-handler';
 import UserActions from './components/UserActions';
 import SearchBarForResponsive from './components/SearchBarForResponsive';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
@@ -19,10 +20,10 @@ export default function Navbar() {
           >
             {nav ? <IoCloseOutline size={28} /> : <CgMenuLeftAlt size={24} />}
           </div>
-          <h1 className="text-3xl font-medium">
+          <Link to={'/'} className="text-3xl font-medium">
             {/* Logo */}
             Tech<span className="text-xl text-text">Verse</span>
-          </h1>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
