@@ -9,7 +9,7 @@ import done from '../../../assets/animations/Animation - 17135345566734.json';
 import Lottie from 'lottie-react';
 import FromLabel from '../components/Label';
 import { Link } from 'react-router-dom';
-import ConfirmationModal from '../../../components/confirmationModal';
+import ConfirmationModal from '../../../components/Modals/confirmationModal';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   signInFailure,

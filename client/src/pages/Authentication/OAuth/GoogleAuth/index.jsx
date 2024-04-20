@@ -4,7 +4,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { app } from '../../../../firebase.js';
 import { signInSuccess } from '../../../../redux/user/userSlice.js';
 import { useDispatch } from 'react-redux';
-import ConfirmationModal from '../../../../components/confirmationModal/index.jsx';
+import ConfirmationModal from '../../../../components/Modals/confirmationModal/index.jsx';
 import done from '../../../../assets/animations/Animation - 17135345566734.json';
 import Lottie from 'lottie-react';
 import { Link } from 'react-router-dom';

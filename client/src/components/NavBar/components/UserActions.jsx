@@ -16,11 +16,17 @@ import {
 } from '../../../redux/user/userSlice';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LogoutModal from '../../Modals/LogoutModal';
 
 export default function UserActions() {
   const [menu, setMenu] = React.useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [showPopup, setShowPopup] = React.useState(false);
+
+  const handleCloseMenu = () => {
+    setMenu(false);
+  };
   const handleLogoutClick = async () => {
     try {
       dispatch(signOutUserStart());
@@ -32,6 +38,7 @@ export default function UserActions() {
         return;
       }
       dispatch(signOutUserSuccess(data));
+      setShowPopup(false);
       notify();
     } catch (error) {
       dispatch(signOutUserFailure(error.message));
@@ -52,6 +59,32 @@ export default function UserActions() {
 
   return (
     <>
+      {showPopup && (
+        <LogoutModal open={showPopup} onClose={() => setShowPopup(false)}>
+          <div className="text-center w-60">
+            <div className="mx-auto my-4">
+              <h3 className=" font-black text-black ">Confirm logout</h3>
+              <p className="text-gray-400 text-sm mt-2">
+                Are you sure want to logout?
+              </p>
+            </div>
+            <div className="flex  items-center justify-evenly">
+              <button
+                onClick={handleLogoutClick}
+                className="text-white bg-red-500 rounded-lg  shadow-md shadow-red-400/40 py-2 px-4 hover:bg-red-500/75 transition duration-200 ease-in"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="text-gray-500 bg-white rounded-lg  shadow-md py-2 px-4  hover:bg-gray-200 transition duration-200 ease-in "
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </LogoutModal>
+      )}
       <OutsideClickHandler onOutsideClick={() => setMenu(false)}>
         <div
           className="flex text-[#ccd0cf] text-2xl cursor-pointer items-center"
@@ -72,51 +105,66 @@ export default function UserActions() {
         >
           {currentUser ? (
             <div className="flex items-center justify-center  flex-col rounded-md gap-1 border-white border backdrop-blur-xl p-2">
-              <div className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer">
+              <Link
+                to={'/profile'}
+                onClick={handleCloseMenu}
+                className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
+              >
                 <img
                   src={currentUser.avatar}
                   alt=""
                   className="w-8 h-8 rounded-full border-white border-[1px]"
                 />
-
-                <Link to={'/sign-in'}>My profile</Link>
-              </div>
+                My profile
+              </Link>
               <hr className="h-[1px] bg-white w-full " />
 
-              <div className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer">
+              <Link
+                onClick={handleCloseMenu}
+                className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
+              >
                 <IoMdAdd className="text-lg" />
-
-                <Link>Add new post</Link>
-              </div>
+                Add new post
+              </Link>
               <hr className="h-[0.5px] bg-white w-full " />
 
-              <div className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer">
+              <Link
+                onClick={handleCloseMenu}
+                to={'/sign-in'}
+                className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
+              >
                 <PiFilesLight className="text-lg" />
-
-                <Link to={'/sign-in'}>My posts</Link>
-              </div>
+                My posts
+              </Link>
               <hr className="h-[0.5px] bg-white w-full " />
-              <div className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer">
+              <button
+                onClick={() => setShowPopup(true)}
+                className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
+              >
                 <MdLogout className="text-lg " />
-
-                <button onClick={handleLogoutClick}>Logout</button>
-              </div>
+                Logout
+              </button>
             </div>
           ) : (
             <div className="flex items-center justify-center  flex-col rounded-md gap-1 border-white border backdrop-blur-xl p-2">
-              <div className="hover:border  flex items-center justify-center rounded-md gap-2 w-40 h-10 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer">
+              <Link
+                onClick={handleCloseMenu}
+                to={'/sign-in'}
+                className="hover:border  flex items-center justify-center rounded-md gap-2 w-40 h-10 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
+              >
                 <RiBodyScanLine className="text-lg" />
 
-                <Link to={'/sign-in'}>Sign In</Link>
-              </div>
+                <>Sign In</>
+              </Link>
               <hr className="h-[1px] bg-white w-full " />
-              <div className="flex hover:border justify-center items-center rounded-md gap-2 w-40 h-10 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer">
+              <Link
+                onClick={handleCloseMenu}
+                to={'/sign-up'}
+                className="flex hover:border justify-center items-center rounded-md gap-2 w-40 h-10 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
+              >
                 <GoPersonAdd className="text-lg" />
-
-                <Link to={'/sign-up'} className="">
-                  Sign Up
-                </Link>
-              </div>
+                Sign Up
+              </Link>
             </div>
           )}
         </div>

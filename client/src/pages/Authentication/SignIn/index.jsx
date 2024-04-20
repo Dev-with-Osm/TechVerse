@@ -7,7 +7,7 @@ import handWave from '../../../assets/animations/Animation - 1713426469054.json'
 import Lottie from 'lottie-react';
 import FromLabel from '../components/Label';
 import { Link } from 'react-router-dom';
-import ConfirmationModal from '../../../components/confirmationModal';
+import ConfirmationModal from '../../../components/Modals/confirmationModal/index.jsx';
 import done from '../../../assets/animations/Animation - 17135345566734.json';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -20,26 +20,36 @@ export default function Navbar() {
           >
             {nav ? <IoCloseOutline size={28} /> : <CgMenuLeftAlt size={24} />}
           </div>
-          <Link to={'/'} className="text-3xl font-medium">
+          <Link to={'/'} className="text-3xl font-medium md:-mt-2.5">
             {/* Logo */}
             Tech<span className="text-xl text-text">Verse</span>
           </Link>
-        </div>
 
-        {/* Desktop Navigation */}
-        <ul className="hidden md:flex items-center">
-          {navigation.map((item) => (
-            <li
-              key={item.id}
-              className="p-4 rounded-xl my-2 cursor-pointer duration-300 hover:text-text-secondary"
-            >
-              <a href={item.url}>{item.title}</a>
-            </li>
-          ))}
-        </ul>
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex items-center ">
+            {navigation.map((item) => (
+              <li
+                key={item.id}
+                className="p-4 rounded-xl my-2 cursor-pointer duration-300 hover:text-text-secondary"
+              >
+                <Link to={item.url}>{item.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
         <OutsideClickHandler onOutsideClick={() => setNav(false)}>
           {/* Mobile Navigation */}
-          <UserActions />
+          <div className="flex items-center justify-center gap-5">
+            <div className="hidden md:block">
+              <SearchBarForResponsive
+                className={
+                  'text-white placeholder:text-white border-white placeholder:text-sm'
+                }
+              />
+            </div>
+
+            <UserActions />
+          </div>
           <ul
             className={
               nav
@@ -57,7 +67,9 @@ export default function Navbar() {
                   key={item.id}
                   className="flex items-center justify-center m  p-4  text-lg duration-300 font-semibold cursor-pointer"
                 >
-                  <a href={item.url}>{item.title}</a>
+                  <Link onClick={() => setNav(false)} to={item.url}>
+                    {item.title}
+                  </Link>
                 </li>
               ))}
             </div>

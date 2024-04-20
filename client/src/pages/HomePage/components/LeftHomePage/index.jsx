@@ -15,7 +15,7 @@ export default function LeftHomePage() {
       <div className="px-4 md:px-0">
         <h1 className="text-4xl md:text-5xl md:leading-snug text-center md:text-left leading-snug font-medium  ">
           Unlock Your Gaming and Tech Journey with
-          <br className="hidden md:block" /> Teck
+          <br className="hidden lg:block" /> Teck
           <span className="text-text">{typeEffect}</span>
           <Cursor />
         </h1>
