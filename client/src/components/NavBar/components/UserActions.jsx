@@ -111,7 +111,7 @@ export default function UserActions() {
                 className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <img
-                  src={currentUser.avatar}
+                  src={currentUser?.avatar}
                   alt=""
                   className="w-8 h-8 rounded-full border-white border-[1px]"
                 />

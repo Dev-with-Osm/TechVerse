@@ -26,7 +26,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center ">
+          <ul className="hidden md:flex items-center ml-16">
             {navigation.map((item) => (
               <li
                 key={item.id}
