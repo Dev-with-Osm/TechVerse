@@ -11,7 +11,6 @@ import {
 import { app } from '../../firebase.js';
 
 import { PiEyeLight, PiEyeSlash } from 'react-icons/pi';
-import ProgressBar from '@ramonak/react-progress-bar';
 
 import FromLabel from '../Authentication/components/Label/index';
 import ConfirmationModal from '../../components/Modals/confirmationModal/index';
