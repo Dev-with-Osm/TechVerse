@@ -6,7 +6,7 @@ export default function PageNotFound() {
   return (
     <div className="flex items-center flex-col justify-center h-screen -mt-20">
       <Lottie animationData={notFound} />
-      <h1 className="-mt-20 text-3xl">Page Not Found!</h1>
+      <h1 className="md:-mt-20 text-3xl">Page Not Found!</h1>
     </div>
   );
 }
