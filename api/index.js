@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config();
 const dbConn = require('./config/dbConnection');
 const authRouter = require('./routes/auth.route.js');
 const userRouter = require('./routes/user.route.js');
+const postRouter = require('./routes/post.route.js');
 const { notFound, errorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express();
@@ -17,6 +18,7 @@ const port = 4000;
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/post', postRouter);
 
 app.use(notFound);
 app.use(errorHandler);
