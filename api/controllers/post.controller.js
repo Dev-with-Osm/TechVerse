@@ -37,6 +37,7 @@ const editPost = asyncHandler(async (req, res) => {
 const likePost = asyncHandler(async (req, res) => {
   const { postId } = req.body;
   validateDbId(postId);
+
   try {
     const post = await Post.findById(postId);
     if (!post) {
@@ -57,7 +58,7 @@ const likePost = asyncHandler(async (req, res) => {
       updateQuery = {
         $pull: { disLikes: loginUserId },
         $push: { likes: loginUserId },
-        $set: { isDisliked: false },
+        $set: { isDisLiked: false },
       };
       responseMessage = 'Post disliked removed';
     } else {
@@ -124,9 +125,23 @@ const dislikePost = asyncHandler(async (req, res) => {
   }
 });
 
+const getPost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateDbId(id);
+  try {
+    const getPost = await Post.findById(id)
+      .populate('likes')
+      .populate('disLikes');
+    res.json(getPost);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createNewPost,
   editPost,
   likePost,
   dislikePost,
+  getPost,
 };
