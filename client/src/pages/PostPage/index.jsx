@@ -28,6 +28,7 @@ export default function PostPage() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [user, setUser] = useState();
   const [showAllComments, setShowAllComments] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function PostPage() {
   }, [postId]);
 
   useEffect(() => {
+    const user = currentUser;
     const comments = post?.comments || [];
     const sortedComments = comments.sort(
       (a, b) => new Date(b.commentDate) - new Date(a.commentDate),
@@ -62,6 +64,7 @@ export default function PostPage() {
     const disliked = post?.disLikes?.some(
       (dislike) => dislike._id === currentUser?._id,
     );
+    setUser(user);
     setIsLiked(liked);
     setIsDisLiked(disliked);
     setLikes(post?.likes?.length || 0);
@@ -225,17 +228,18 @@ export default function PostPage() {
                 </div>
                 <div className="relative">
                   <textarea
+                    disabled={!user}
                     onChange={(e) => setComment(e.target.value)}
                     rows={4}
                     placeholder="type your comment here"
-                    className="disabled:cursor-not-allowed border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-5 rounded-md placeholder:text-xs placeholder:text-text-secondary w-full"
+                    className="disabled:cursor-not-allowed border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out  py-2.5 pl-5 rounded-md placeholder:text-xs placeholder:text-text-secondary w-full"
                   ></textarea>
                   <button
                     onClick={handleSubmit}
-                    className="bg-text-secondary text-black rounded-md flex gap-1 items-center font-medium hover:bg-text transition  duration-200 ease-in-out px-3 py-1 absolute bottom-5 right-5"
+                    disabled={!user}
+                    className=" disabled:cursor-not-allowed rounded-md flex gap-1 items-center font-medium text-text   duration-200 ease-in-out p-3 absolute bottom-2 right-2"
                   >
-                    Submit
-                    <IoSendOutline className="text-sm" />
+                    <IoSendOutline className="" />
                   </button>
                 </div>
 

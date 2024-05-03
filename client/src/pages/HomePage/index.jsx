@@ -14,12 +14,12 @@ export default function HomePage() {
       </div>
       <Statistics />
       <div className="my-20 flex justify-center">
-        <div className="my-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-y-8 md:gap-x-16">
+        {/* <div className="my-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-y-8 md:gap-x-16">
           <PostItem />
           <PostItem />
           <PostItem />
           <PostItem />
-        </div>
+        </div> */}
       </div>
     </div>
   );

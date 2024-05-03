@@ -9,8 +9,8 @@ import {
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { Bounce, ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 export default function PostItem() {
   const { currentUser } = useSelector((state) => state.user);
   const [post, setPost] = useState({});
@@ -50,7 +50,7 @@ export default function PostItem() {
     try {
       if (!currentUser) {
         console.log('you can not like before sign in ');
-        notify();
+        // notify();
         return;
       }
       const res = await fetch('/api/post/like-post', {
@@ -85,7 +85,7 @@ export default function PostItem() {
   const handleDislikeClick = async () => {
     if (!currentUser) {
       console.log('you can not like before sign in ');
-      notify();
+      // notify();
       return;
     }
     try {
@@ -116,18 +116,18 @@ export default function PostItem() {
       console.log(error);
     }
   };
-  const notify = () =>
-    toast.warn('You must be signed in first', {
-      position: 'bottom-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-      transition: Bounce,
-    });
+  // const notify = () =>
+  //   toast.warn('You must be signed in first', {
+  //     position: 'bottom-right',
+  //     autoClose: 2000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: false,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: 'dark',
+  //     transition: Bounce,
+  //   });
   return (
     <div
       className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
@@ -188,7 +188,7 @@ export default function PostItem() {
           <p className="text-[10px]">{fromNow}</p>
         </div>
       </div>
-      {
+      {/* {
         <ToastContainer
           position="bottom-right"
           autoClose={5000}
@@ -202,7 +202,7 @@ export default function PostItem() {
           theme="light"
           transition={Bounce}
         />
-      }
+      } */}
     </div>
   );
 }

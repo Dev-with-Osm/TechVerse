@@ -47,13 +47,13 @@ export default function UserActions() {
   const notify = () =>
     toast.success('Logged out successfully', {
       position: 'bottom-right',
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'light',
+      theme: 'dark',
       transition: Bounce,
     });
 
@@ -177,7 +177,7 @@ export default function UserActions() {
       </OutsideClickHandler>
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -185,7 +185,7 @@ export default function UserActions() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme="dark"
         transition={Bounce}
       />
     </>
