@@ -43,13 +43,11 @@ const loginUser = asyncHandler(async (req, res) => {
     if (!isPasswordCorrect) throw new Error('Invalid Credentials');
 
     // generate token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: '1d',
-    });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
 
     const { password: pass, ...rest } = user._doc;
     res
-      .cookie('access_token', token, { maxAge: 86400000, httpOnly: true })
+      .cookie('access_token', token, { httpOnly: true })
       .status(200)
       .json(rest);
   } catch (error) {

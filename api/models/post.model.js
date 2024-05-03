@@ -11,6 +11,7 @@ var postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    hashtags: [{ type: String }],
     author: {
       type: String,
       required: true,
@@ -42,7 +43,7 @@ var postSchema = new mongoose.Schema(
 
     comments: [
       {
-        type: String,
+        comment: { type: String },
         commentedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         commentDate: {
           type: Date,

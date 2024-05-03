@@ -8,6 +8,8 @@ import Profile from './pages/ProfilePage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import PageNotFound from './pages/PageNotFound';
 import AboutPage from './pages/AboutPage';
+import AddPost from './pages/AddPostPage';
+import PostPage from './pages/PostPage';
 
 export default function App() {
   return (
@@ -19,8 +21,10 @@ export default function App() {
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/post/:postId" element={<PostPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/new-post" element={<AddPost />} />
         </Route>
       </Routes>
     </BrowserRouter>

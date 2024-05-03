@@ -57,6 +57,11 @@ export default function UserActions() {
       transition: Bounce,
     });
 
+  const handleLogout = () => {
+    handleCloseMenu();
+    setShowPopup(true);
+  };
+
   return (
     <>
       {showPopup && (
@@ -120,6 +125,7 @@ export default function UserActions() {
               <hr className="h-[1px] bg-white w-full " />
 
               <Link
+                to={'/new-post'}
                 onClick={handleCloseMenu}
                 className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
               >
@@ -138,7 +144,7 @@ export default function UserActions() {
               </Link>
               <hr className="h-[0.5px] bg-white w-full " />
               <button
-                onClick={() => setShowPopup(true)}
+                onClick={handleLogout}
                 className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <MdLogout className="text-lg " />

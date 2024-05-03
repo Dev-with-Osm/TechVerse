@@ -9,7 +9,8 @@ import {
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
-
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function PostItem() {
   const { currentUser } = useSelector((state) => state.user);
   const [post, setPost] = useState({});
@@ -21,7 +22,7 @@ export default function PostItem() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch('/api/post/get-post/662b5da454f1b42fa59bf51b');
+        const res = await fetch('/api/post/get-post/66334518dc7f38a035b58d8d');
         const data = await res.json();
         setPost(data);
       } catch (error) {
@@ -47,6 +48,11 @@ export default function PostItem() {
 
   const handleLikeClick = async () => {
     try {
+      if (!currentUser) {
+        console.log('you can not like before sign in ');
+        notify();
+        return;
+      }
       const res = await fetch('/api/post/like-post', {
         method: 'PUT',
         headers: {
@@ -77,6 +83,11 @@ export default function PostItem() {
   };
 
   const handleDislikeClick = async () => {
+    if (!currentUser) {
+      console.log('you can not like before sign in ');
+      notify();
+      return;
+    }
     try {
       const res = await fetch('/api/post/dislike-post', {
         method: 'PUT',
@@ -105,10 +116,21 @@ export default function PostItem() {
       console.log(error);
     }
   };
-
+  const notify = () =>
+    toast.warn('You must be signed in first', {
+      position: 'bottom-right',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
   return (
     <div
-      className="w-[300px] h-[400px] border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
+      className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
       style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
     >
       <div
@@ -153,7 +175,7 @@ export default function PostItem() {
           <p className="text-xs">{post.disLikes?.length || 0}</p>
         </div>
       </div>
-      <div className="px-2 flex flex-col justify-between">
+      <div className="px-2 flex flex-col justify-between ">
         <div>
           <p className="text-[10px] text-slate-300">
             {post.views} <span>View(s)</span>
@@ -166,6 +188,21 @@ export default function PostItem() {
           <p className="text-[10px]">{fromNow}</p>
         </div>
       </div>
+      {
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+      }
     </div>
   );
 }

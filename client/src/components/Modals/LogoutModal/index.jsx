@@ -17,7 +17,7 @@ export default function LogoutModal({ open, onClose, children }) {
       >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-white text-3xl p-1 rounded-lg bg-black hover:bg-gray-700 cursor-pointer"
+          className="absolute top-2 right-2  text-3xl p-1 rounded-lg text-black cursor-pointer"
         >
           <IoCloseOutline />
         </button>

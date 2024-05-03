@@ -131,8 +131,43 @@ const getPost = asyncHandler(async (req, res) => {
   try {
     const getPost = await Post.findById(id)
       .populate('likes')
-      .populate('disLikes');
+      .populate('disLikes')
+      .populate({
+        path: 'comments',
+        populate: { path: 'commentedBy' }, // Populate the 'commentedBy' field
+      });
+    if (!getPost) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
     res.json(getPost);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const addComment = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await Post.findById(id);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+    const { comment } = req.body;
+    const newComment = await Post.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          comments: {
+            comment: comment,
+            commentedBy: req.user.id,
+            commentDate: new Date(),
+          },
+        },
+      },
+      { new: true },
+    );
+    res.json(newComment);
   } catch (error) {
     throw new Error(error);
   }
@@ -144,4 +179,5 @@ module.exports = {
   likePost,
   dislikePost,
   getPost,
+  addComment,
 };
