@@ -32,7 +32,6 @@ export default function UserActions() {
       dispatch(signOutUserStart());
       const res = await fetch('/api/auth/logout');
       const data = await res.json();
-      console.log(data);
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
         return;

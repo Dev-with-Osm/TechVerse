@@ -13,6 +13,7 @@ import Loader from '../../components/Loader';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -75,10 +76,7 @@ export default function PostPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!currentUser) {
-      console.log('you can not comment before sign in ');
-      return;
-    }
+
     const res = await fetch(`/api/post/add-comment/${postId}`, {
       method: 'PUT',
       headers: {
@@ -92,12 +90,15 @@ export default function PostPage() {
     console.log(data);
     setNewComment(comment);
     setCommentsLength(commentsLength + 1);
+    notify('comment');
+    setComment('');
   };
 
   const handleLikeClick = async () => {
     try {
       if (!currentUser) {
         console.log('you can not like before sign in ');
+        notify('like');
         return;
       }
       const res = await fetch('/api/post/like-post', {
@@ -132,6 +133,7 @@ export default function PostPage() {
   const handleDislikeClick = async () => {
     if (!currentUser) {
       console.log('you can not like before sign in ');
+      notify('dislike');
       return;
     }
     try {
@@ -163,190 +165,229 @@ export default function PostPage() {
     }
   };
 
+  const notify = (action) => {
+    let message = '';
+    let icon = '⚠️';
+
+    switch (action) {
+      case 'like':
+        message = 'Sign in first to like!';
+        break;
+      case 'dislike':
+        message = 'Sign in first to dislike!';
+        break;
+      case 'comment':
+        message = 'Comment Added';
+        icon = '✅';
+        break;
+      default:
+        break;
+    }
+
+    toast(message, {
+      duration: 2000,
+      position: 'bottom-right',
+      icon: icon,
+      style: {
+        borderRadius: '10px',
+        fontSize: '14px',
+      },
+    });
+  };
+
   dayjs.extend(relativeTime);
 
   return (
-    <div>
-      {loading && (
-        <div className="h-screen flex items-center justify-center">
-          <Loader />
-        </div>
-      )}
-      {error && <p>{error}</p>}
-      {post && (
-        <div className=" flex flex-col gap-10 justify-center items-center md:items-start md:flex-row p-5">
-          <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4 md:w-3/5 w-full h-fit">
-            <div className="md:px-4">
-              <h1 className="text-text text-center md:text-left text-xl">
-                {post.title}
-              </h1>
-            </div>
-            <div>
-              <img src={post.image} alt={post.title} className="rounded-md " />
-            </div>
-
-            <div className="px-2 flex gap-5 flex-col">
+    <>
+      <div>
+        {loading && (
+          <div className="h-screen flex items-center justify-center -mt-20">
+            <Loader />
+          </div>
+        )}
+        {error && <p>{error}</p>}
+        {post && (
+          <div className=" flex flex-col gap-10 justify-center items-center md:items-start md:flex-row p-5">
+            <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4 md:w-3/5 w-full h-fit">
+              <div className="md:px-4">
+                <h1 className="text-text text-center md:text-left text-xl">
+                  {post.title}
+                </h1>
+              </div>
               <div>
-                <p className="text-sm">{post.body}</p>
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="rounded-md "
+                />
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center px-1">
-                  <h1 className="cursor-pointer">
-                    <span className="text-text underline underline-offset-2">
-                      comments
-                    </span>{' '}
-                    ({commentsLength})
-                  </h1>
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="flex items-center justify-center flex-col"
-                      onClick={handleLikeClick}
-                    >
-                      {isLiked ? (
-                        <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                      ) : (
-                        <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                      )}
-                      <p className="text-xs">{likes}</p>
-                    </div>
-                    <div
-                      className="flex items-center justify-center flex-col"
-                      onClick={handleDislikeClick}
-                    >
-                      {isDisLiked ? (
-                        <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                      ) : (
-                        <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                      )}
-                      <p className="text-xs">{dislikes}</p>
-                    </div>
-                    <div className="flex items-center justify-center flex-col">
-                      <BsShare className="hover:fill-blue-500 hover:scale-125 transition-scale transition duration-300 w-5" />
-                      <p className="text-xs">{post.disLikes?.length || 0}</p>
+
+              <div className="px-2 flex gap-5 flex-col">
+                <div>
+                  <p className="text-sm">{post.body}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center px-1">
+                    <h1 className="cursor-pointer">
+                      <span className="text-text underline underline-offset-2">
+                        comments
+                      </span>{' '}
+                      ({commentsLength})
+                    </h1>
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="flex items-center justify-center flex-col"
+                        onClick={handleLikeClick}
+                      >
+                        {isLiked ? (
+                          <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                        ) : (
+                          <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                        )}
+                        <p className="text-xs">{likes}</p>
+                      </div>
+                      <div
+                        className="flex items-center justify-center flex-col"
+                        onClick={handleDislikeClick}
+                      >
+                        {isDisLiked ? (
+                          <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                        ) : (
+                          <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                        )}
+                        <p className="text-xs">{dislikes}</p>
+                      </div>
+                      <div className="flex items-center justify-center flex-col">
+                        <BsShare className="hover:fill-blue-500 hover:scale-125 transition-scale transition duration-300 w-5" />
+                        <p className="text-xs">{post.disLikes?.length || 0}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="relative">
-                  <textarea
-                    disabled={!user}
-                    onChange={(e) => setComment(e.target.value)}
-                    rows={4}
-                    placeholder="type your comment here"
-                    className="disabled:cursor-not-allowed border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out  py-2.5 pl-5 rounded-md placeholder:text-xs placeholder:text-text-secondary w-full"
-                  ></textarea>
-                  <button
-                    onClick={handleSubmit}
-                    disabled={!user}
-                    className=" disabled:cursor-not-allowed rounded-md flex gap-1 items-center font-medium text-text   duration-200 ease-in-out p-3 absolute bottom-2 right-2"
-                  >
-                    <IoSendOutline className="" />
-                  </button>
-                </div>
-
-                {newComment && (
-                  <div className="border border-text-secondary/50 p-3 ">
-                    <div className="flex justify-between">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={currentUser?.avatar}
-                          alt=""
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <p className="text-xs">
-                          {currentUser?.firstName + ' ' + currentUser?.lastName}
-                        </p>
-                      </div>
-                      <div className="text-[10px]">{dayjs().fromNow()}</div>
-                    </div>
-                    <div>
-                      <p className="text-sm ml-12 break-all">{newComment}</p>
-                    </div>
+                  <div className="relative">
+                    <textarea
+                      disabled={!user}
+                      onChange={(e) => setComment(e.target.value)}
+                      rows={4}
+                      placeholder="type your comment here"
+                      className="disabled:cursor-not-allowed border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out  py-2.5 pl-5 rounded-md placeholder:text-xs placeholder:text-text-secondary w-full"
+                    ></textarea>
+                    <button
+                      onClick={handleSubmit}
+                      disabled={!user}
+                      className=" disabled:cursor-not-allowed rounded-md flex gap-1 items-center font-medium text-text   duration-200 ease-in-out p-3 absolute bottom-2 right-2"
+                    >
+                      <IoSendOutline className="" />
+                    </button>
                   </div>
-                )}
 
-                {showAllComments
-                  ? allComments.map((value, index) => (
-                      <div
-                        key={index}
-                        className="border border-text-secondary/50 p-3 "
-                      >
-                        <div className="flex  justify-between">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={value.commentedBy?.avatar}
-                              alt=""
-                              className="w-8 h-8 rounded-full"
-                            />
-                            <p className="text-xs">
-                              {value.commentedBy?.firstName +
-                                ' ' +
-                                value.commentedBy?.lastName}
-                            </p>
-                          </div>
-                          <div className="text-[10px]">
-                            {dayjs(value.commentDate).fromNow()}
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-sm ml-12 break-all">
-                            {value.comment}
+                  {newComment && (
+                    <div className="border border-text-secondary/50 p-3 ">
+                      <div className="flex justify-between">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={currentUser?.avatar}
+                            alt=""
+                            className="w-8 h-8 rounded-full"
+                          />
+                          <p className="text-xs">
+                            {currentUser?.firstName +
+                              ' ' +
+                              currentUser?.lastName}
                           </p>
                         </div>
+                        <div className="text-[10px]">{dayjs().fromNow()}</div>
                       </div>
-                    ))
-                  : allComments.slice(0, 4).map((value, index) => (
-                      <div
-                        key={index}
-                        className="border border-text-secondary/50 p-3 "
-                      >
-                        <div className="flex justify-between">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={value.commentedBy?.avatar}
-                              alt=""
-                              className="w-8 h-8 rounded-full"
-                            />
-                            <p className="text-xs">
-                              {value.commentedBy?.firstName +
-                                ' ' +
-                                value.commentedBy?.lastName}
+                      <div>
+                        <p className="text-sm ml-12 break-all">{newComment}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {showAllComments
+                    ? allComments.map((value, index) => (
+                        <div
+                          key={index}
+                          className="border border-text-secondary/50 p-3 "
+                        >
+                          <div className="flex  justify-between">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={value.commentedBy?.avatar}
+                                alt=""
+                                className="w-8 h-8 rounded-full"
+                              />
+                              <p className="text-xs">
+                                {value.commentedBy?.firstName +
+                                  ' ' +
+                                  value.commentedBy?.lastName}
+                              </p>
+                            </div>
+                            <div className="text-[10px]">
+                              {dayjs(value.commentDate).fromNow()}
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-sm ml-12 break-all">
+                              {value.comment}
                             </p>
                           </div>
-                          <div className="text-[10px]">
-                            {dayjs(value.commentDate).fromNow()}
+                        </div>
+                      ))
+                    : allComments.slice(0, 4).map((value, index) => (
+                        <div
+                          key={index}
+                          className="border border-text-secondary/50 p-3 "
+                        >
+                          <div className="flex justify-between">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={value.commentedBy?.avatar}
+                                alt=""
+                                className="w-8 h-8 rounded-full"
+                              />
+                              <p className="text-xs">
+                                {value.commentedBy?.firstName +
+                                  ' ' +
+                                  value.commentedBy?.lastName}
+                              </p>
+                            </div>
+                            <div className="text-[10px]">
+                              {dayjs(value.commentDate).fromNow()}
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-sm ml-12 break-all ">
+                              {value.comment}
+                            </p>
                           </div>
                         </div>
-                        <div>
-                          <p className="text-sm ml-12 break-all ">
-                            {value.comment}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
 
-                {commentsLength > 4 && (
-                  <button
-                    onClick={() => setShowAllComments(!showAllComments)}
-                    className="bg-gray-800 text-white rounded-md px-1 py-1 mt-2"
-                  >
-                    {showAllComments
-                      ? 'Show Less Comments'
-                      : 'Show All Comments'}
-                  </button>
-                )}
+                  {commentsLength > 4 && (
+                    <button
+                      onClick={() => setShowAllComments(!showAllComments)}
+                      className=" text-white text-right  rounded-md px-1 text-xs mt-1 underline underline-offset-2"
+                    >
+                      {showAllComments
+                        ? 'Show Less Comments'
+                        : 'Show All Comments'}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="w-full md:w-auto ">
+              <h1 className="mb-2 w-full text-xl">Related posts:</h1>
+              <div className="flex flex-col items-center justify-center gap-4">
+                <PostItem />
+                <PostItem />
+                <PostItem />
               </div>
             </div>
           </div>
-          <div className="w-full md:w-auto ">
-            <h1 className="mb-2 w-full text-xl">Related posts:</h1>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <PostItem />
-              <PostItem />
-              <PostItem />
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+      <Toaster />
+    </>
   );
 }

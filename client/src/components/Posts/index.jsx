@@ -9,8 +9,8 @@ import {
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
-// import { Bounce, ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
+
 export default function PostItem() {
   const { currentUser } = useSelector((state) => state.user);
   const [post, setPost] = useState({});
@@ -37,6 +37,7 @@ export default function PostItem() {
     const disliked = post?.disLikes?.some(
       (dislike) => dislike._id === currentUser?._id,
     );
+
     setIsLiked(liked);
     setIsDisLiked(disliked);
     setLikes(post?.likes?.length || 0);
@@ -50,7 +51,7 @@ export default function PostItem() {
     try {
       if (!currentUser) {
         console.log('you can not like before sign in ');
-        // notify();
+        notify('like');
         return;
       }
       const res = await fetch('/api/post/like-post', {
@@ -85,7 +86,7 @@ export default function PostItem() {
   const handleDislikeClick = async () => {
     if (!currentUser) {
       console.log('you can not like before sign in ');
-      // notify();
+      notify('dislike');
       return;
     }
     try {
@@ -116,93 +117,102 @@ export default function PostItem() {
       console.log(error);
     }
   };
-  // const notify = () =>
-  //   toast.warn('You must be signed in first', {
-  //     position: 'bottom-right',
-  //     autoClose: 2000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: false,
-  //     draggable: true,
-  //     progress: undefined,
-  //     theme: 'dark',
-  //     transition: Bounce,
-  //   });
+
+  const notify = (action) => {
+    let message =
+      action === 'like'
+        ? 'Sign in first to like!'
+        : 'Sign in first to dislike!';
+    toast(message, {
+      duration: 2000,
+      position: 'bottom-right',
+      icon: '⚠️',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        fontSize: '14px',
+      },
+    });
+  };
   return (
-    <div
-      className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
-      style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-    >
+    <>
       <div
-        className="w-full h-[200px] bg-cover rounded-lg"
-        style={{ backgroundImage: `Url(${post.image})` }}
-      ></div>
-      <div className="px-2">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-sm line-clamp-2">{post.title}</h2>
-          <p className="text-[11px] line-clamp-3 text-white/85">{post.body}</p>
-        </div>
-      </div>
-      <div className="flex items-center justify-between px-2">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-3">
-            <div
-              className="flex items-center justify-center flex-col"
-              onClick={handleLikeClick}
-            >
-              {isLiked ? (
-                <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-              ) : (
-                <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-              )}
-              <p className="text-xs">{likes}</p>
-            </div>
-            <div
-              className="flex items-center justify-center flex-col"
-              onClick={handleDislikeClick}
-            >
-              {isDisLiked ? (
-                <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-              ) : (
-                <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-              )}
-              <p className="text-xs">{dislikes}</p>
-            </div>
+        className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
+        style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+      >
+        <div
+          className="w-full h-[200px] bg-cover rounded-lg"
+          style={{ backgroundImage: `Url(${post.image})` }}
+        ></div>
+        <div className="px-2">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-sm line-clamp-2">{post.title}</h2>
+            <p className="text-[11px] line-clamp-3 text-white/85">
+              {post.body}
+            </p>
           </div>
         </div>
-        <div className="flex items-center justify-center flex-col">
-          <BsShare className="hover:fill-blue-500 hover:scale-125 transition-scale transition duration-300 w-5" />
-          <p className="text-xs">{post.disLikes?.length || 0}</p>
+        <div className="flex items-center justify-between px-2">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <div
+                className="flex items-center justify-center flex-col"
+                onClick={handleLikeClick}
+              >
+                {isLiked ? (
+                  <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                ) : (
+                  <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                )}
+                <p className="text-xs">{likes}</p>
+              </div>
+              <div
+                className="flex items-center justify-center flex-col"
+                onClick={handleDislikeClick}
+              >
+                {isDisLiked ? (
+                  <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                ) : (
+                  <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+                )}
+                <p className="text-xs">{dislikes}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-center flex-col">
+            <BsShare className="hover:fill-blue-500 hover:scale-125 transition-scale transition duration-300 w-5" />
+            <p className="text-xs">{post.disLikes?.length || 0}</p>
+          </div>
+        </div>
+        <div className="px-2 flex flex-col justify-between ">
+          <div>
+            <p className="text-[10px] text-slate-300">
+              {post.views} <span>View(s)</span>
+            </p>
+          </div>
+          <div className="flex justify-between items-center mb-1">
+            <p className="text-[10px]">
+              View all {post.comments?.length || 0} comment...
+            </p>
+            <p className="text-[10px]">{fromNow}</p>
+          </div>
         </div>
       </div>
-      <div className="px-2 flex flex-col justify-between ">
-        <div>
-          <p className="text-[10px] text-slate-300">
-            {post.views} <span>View(s)</span>
-          </p>
-        </div>
-        <div className="flex justify-between items-center mb-1">
-          <p className="text-[10px]">
-            View all {post.comments?.length || 0} comment...
-          </p>
-          <p className="text-[10px]">{fromNow}</p>
-        </div>
-      </div>
-      {/* {
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
-        />
-      } */}
-    </div>
+      <Toaster />
+      {/* <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      /> */}
+    </>
   );
 }

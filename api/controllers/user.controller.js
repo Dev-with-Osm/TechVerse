@@ -2,6 +2,7 @@
 const User = require('../models/user.model.js');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
+const Post = require('../models/post.model.js');
 
 const updateUser = asyncHandler(async (req, res) => {
   try {
@@ -34,4 +35,16 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { updateUser };
+const getUserPosts = asyncHandler(async (req, res) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const post = await Post.find({ author: req.params.id });
+      res.status(200).json(post);
+    } catch (error) {
+      throw new Error(error);
+    }
+  } else {
+    return res.status(401).json('you can only get your own posts');
+  }
+});
+module.exports = { updateUser, getUserPosts };

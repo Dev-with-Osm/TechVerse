@@ -43,7 +43,7 @@ export default function Navbar() {
             <div className="hidden md:block">
               <SearchBarForResponsive
                 className={
-                  'text-white placeholder:text-white border-white placeholder:text-sm'
+                  'text-white placeholder:text-white border-text-secondary border-[0.5px] placeholder:text-sm'
                 }
               />
             </div>

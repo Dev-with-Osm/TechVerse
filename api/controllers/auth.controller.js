@@ -18,12 +18,10 @@ const createNewUser = asyncHandler(async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: '1d',
-    });
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
 
     res
-      .cookie('access_token', token, { maxAge: 86400000, httpOnly: true })
+      .cookie('access_token', token, { httpOnly: true })
       .status(201)
       .json(newUser);
   } catch (error) {

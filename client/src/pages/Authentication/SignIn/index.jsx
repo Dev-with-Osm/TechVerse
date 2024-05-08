@@ -23,6 +23,7 @@ export default function SignInPage() {
   const { error, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
+  console.log(showPopup);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -87,13 +88,12 @@ export default function SignInPage() {
       {showPopup && (
         <ConfirmationModal open={showPopup}>
           <div className="text-center ">
-            <Lottie animationData={done} className=" w-40 mx-auto" />
-            <div className="mx-auto my-4">
-              <h3 className="text-lg font-black text-green-400">
-                Login successfully done
-              </h3>
-              <h3 className="text-lg font-black text-black">
-                welcome back to the community
+            <Lottie animationData={done} className="  w-20 -mt-4 mx-auto" />
+            <div className="mx-auto mb-4">
+              <h3 className="text-lg  text-green-500">Awesome</h3>
+              <h3 className="  text-black text-sm">
+                Congratulations! <br /> You're now part of our community. <br />
+                Let the adventure begin
               </h3>
             </div>
             <div className="flex gap-4 items-center justify-center">

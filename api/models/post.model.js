@@ -51,6 +51,11 @@ var postSchema = new mongoose.Schema(
         },
       },
     ],
+    shares: [],
+    views: {
+      type: Number,
+      default: 0,
+    },
   },
 
   { timestamps: true },
