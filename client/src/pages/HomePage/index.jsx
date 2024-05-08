@@ -5,6 +5,8 @@ import LeftHomePage from './components/LeftHomePage';
 import RightHomePage from './components/RightHomePage';
 import Statistics from './components/Statistics';
 import Loader from '../../components/Loader';
+import TrandingPosts from './components/TrandingPosts';
+import { AiOutlineThunderbolt } from 'react-icons/ai';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +20,7 @@ export default function HomePage() {
 
   return (
     <div className="">
-      <CursorAnimation />
+      {/* <CursorAnimation /> */}
       {isLoading ? (
         <div className="h-screen flex items-center justify-center -mt-20">
           <Loader />
@@ -30,10 +32,20 @@ export default function HomePage() {
             <RightHomePage />
           </div>
           <Statistics />
-          <div className="my-20 flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-y-8 md:gap-x-16">
-              <PostItem />
+
+          <div className=" mt-10">
+            <div className=" flex items-center justify-between  ">
+              <h1 className="text-left text-2xl flex items-center gap-1">
+                <span>
+                  <AiOutlineThunderbolt />
+                </span>
+                Tranding Posts:
+              </h1>
+              <button className="p-2 bg-text text-black rounded-md">
+                see more
+              </button>
             </div>
+            <TrandingPosts />
           </div>
         </>
       )}

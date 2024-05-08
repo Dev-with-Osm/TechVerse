@@ -185,17 +185,41 @@ const getAllPosts = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
     const searchTerm = req.query.searchTerm || '';
-    const sort = req.query.sort || 'createdAt';
+    const sort = req.query.sort || 'createdAt'; // Default sort by createdAt in descending order
     const order = req.query.order || 'desc';
-    const posts = await Post.find({
-      $or: [
-        { title: { $regex: searchTerm, $options: 'i' } },
-        { hashtags: { $regex: searchTerm, $options: 'i' } },
-      ],
-    })
-      .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
+
+    let sortConditions = {};
+
+    if (sort === 'likes') {
+      sortConditions = { likesCount: order === 'asc' ? 1 : -1 };
+    } else {
+      sortConditions[sort] = order === 'asc' ? 1 : -1;
+    }
+
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          $or: [
+            { title: { $regex: searchTerm, $options: 'i' } },
+            { hashtags: { $regex: searchTerm, $options: 'i' } },
+          ],
+        },
+      },
+      {
+        $addFields: {
+          likesCount: { $size: '$likes' },
+        },
+      },
+      {
+        $sort: sortConditions,
+      },
+      {
+        $skip: startIndex,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
 
     res.status(200).json(posts);
   } catch (error) {

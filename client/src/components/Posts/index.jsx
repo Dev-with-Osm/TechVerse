@@ -10,8 +10,9 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
-export default function PostItem() {
+export default function PostItem({ PostItem, id }) {
   const { currentUser } = useSelector((state) => state.user);
   const [post, setPost] = useState({});
   const [isLiked, setIsLiked] = useState(false);
@@ -19,10 +20,12 @@ export default function PostItem() {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
 
+  console.log(id);
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch('/api/post/get-post/66334518dc7f38a035b58d8d');
+        const res = await fetch(`/api/post/get-post/${id}`);
         const data = await res.json();
         setPost(data);
       } catch (error) {
@@ -141,10 +144,11 @@ export default function PostItem() {
         className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
         style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
       >
-        <div
+        <Link
+          to={`/post/${id}`}
           className="w-full h-[200px] bg-cover rounded-lg"
           style={{ backgroundImage: `Url(${post.image})` }}
-        ></div>
+        ></Link>
         <div className="px-2">
           <div className="flex flex-col gap-2">
             <h2 className="text-sm line-clamp-2">{post.title}</h2>
