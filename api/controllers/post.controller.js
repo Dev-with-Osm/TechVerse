@@ -180,6 +180,29 @@ const addComment = asyncHandler(async (req, res) => {
   }
 });
 
+const getAllPosts = asyncHandler(async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 9;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const searchTerm = req.query.searchTerm || '';
+    const sort = req.query.sort || 'createdAt';
+    const order = req.query.order || 'desc';
+    const posts = await Post.find({
+      $or: [
+        { title: { $regex: searchTerm, $options: 'i' } },
+        { hashtags: { $regex: searchTerm, $options: 'i' } },
+      ],
+    })
+      .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
+
+    res.status(200).json(posts);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createNewPost,
   editPost,
@@ -187,4 +210,14 @@ module.exports = {
   dislikePost,
   getPost,
   addComment,
+  getAllPosts,
 };
+//const page = parseInt(req.query.page) - 1 || 0;
+// // let sort = req.query.sort || 'likes';
+// console.log({
+//   limit,
+//   query: req.query,
+//   startIndex,
+// });
+// const posts = await Post.find({}).limit(limit).skip(startIndex);
+// res.json(posts);

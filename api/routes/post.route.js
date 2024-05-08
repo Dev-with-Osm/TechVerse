@@ -8,6 +8,7 @@ const {
   dislikePost,
   getPost,
   addComment,
+  getAllPosts,
 } = require('../controllers/post.controller');
 const router = express.Router();
 
@@ -17,5 +18,6 @@ router.put('/like-post', verifyToken, likePost);
 router.put('/dislike-post', verifyToken, dislikePost);
 router.put('/add-comment/:id', verifyToken, addComment);
 router.get('/get-post/:id', getPost);
+router.get('/all-posts', getAllPosts);
 
 module.exports = router;

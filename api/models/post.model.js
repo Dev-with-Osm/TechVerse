@@ -11,7 +11,7 @@ var postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    hashtags: [{ type: String }],
+    hashtags: { type: String },
     author: {
       type: String,
       required: true,
