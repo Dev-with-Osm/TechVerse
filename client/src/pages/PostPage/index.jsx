@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  BsHandThumbsDown,
-  BsHandThumbsDownFill,
-  BsHandThumbsUp,
-  BsHandThumbsUpFill,
-  BsShare,
-} from 'react-icons/bs';
+
 import { IoSendOutline } from 'react-icons/io5';
 import { useParams } from 'react-router-dom';
 import PostItem from '../../components/Posts';
@@ -14,6 +8,10 @@ import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import toast, { Toaster } from 'react-hot-toast';
+import LikeButton from '../../components/ReactionButtons/LikeButton';
+import DislikeButton from '../../components/ReactionButtons/DislikeButton';
+import { FaRegCopy } from 'react-icons/fa6';
+import ShareButton from '../../components/ReactionButtons/ShareButton';
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -30,6 +28,9 @@ export default function PostPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [user, setUser] = useState();
+  const [sharesLength, setSahresLength] = useState(0);
+  const [copied, setCopied] = useState(false);
+  console.log(copied);
   const [showAllComments, setShowAllComments] = useState(false);
 
   useEffect(() => {
@@ -56,6 +57,8 @@ export default function PostPage() {
   }, [postId]);
 
   useEffect(() => {
+    const postLink = window.location.href;
+    const shares = post?.shares;
     const user = currentUser;
     const comments = post?.comments || [];
     const sortedComments = comments.sort(
@@ -72,6 +75,8 @@ export default function PostPage() {
     setDislikes(post?.disLikes?.length || 0);
     setAllComments(sortedComments);
     setCommentsLength(sortedComments.length);
+    setSahresLength(shares);
+    setCopied(postLink);
   }, [post, currentUser]);
 
   const handleSubmit = async (e) => {
@@ -94,77 +99,6 @@ export default function PostPage() {
     setComment('');
   };
 
-  const handleLikeClick = async () => {
-    try {
-      if (!currentUser) {
-        console.log('you can not like before sign in ');
-        notify('like');
-        return;
-      }
-      const res = await fetch('/api/post/like-post', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: post._id }),
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        return console.log(data);
-      }
-      setLikes((prevLikes) => {
-        if (isLiked) {
-          return prevLikes - 1;
-        } else {
-          return prevLikes + 1;
-        }
-      });
-      setIsLiked(!isLiked);
-      if (isDisLiked) {
-        setDislikes((prevDislikes) => prevDislikes - 1);
-        setIsDisLiked(false);
-      }
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDislikeClick = async () => {
-    if (!currentUser) {
-      console.log('you can not like before sign in ');
-      notify('dislike');
-      return;
-    }
-    try {
-      const res = await fetch('/api/post/dislike-post', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: post._id }),
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        return console.log(data);
-      }
-      setDislikes((prevDislikes) => {
-        if (isDisLiked) {
-          return prevDislikes - 1;
-        } else {
-          return prevDislikes + 1;
-        }
-      });
-      setIsDisLiked(!isDisLiked);
-      if (isLiked) {
-        setLikes((prevLikes) => prevLikes - 1);
-        setIsLiked(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const notify = (action) => {
     let message = '';
     let icon = '⚠️';
@@ -172,6 +106,10 @@ export default function PostPage() {
     switch (action) {
       case 'like':
         message = 'Sign in first to like!';
+        break;
+      case 'share':
+        message = 'Copy to clipboard';
+        icon = <FaRegCopy />;
         break;
       case 'dislike':
         message = 'Sign in first to dislike!';
@@ -209,10 +147,34 @@ export default function PostPage() {
         {post && (
           <div className=" flex flex-col gap-10 justify-center items-center md:items-start md:flex-row p-5">
             <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4 md:w-3/5 w-full h-fit">
-              <div className="md:px-4">
-                <h1 className="text-text text-center md:text-left text-xl">
-                  {post.title}
-                </h1>
+              <div className="md:px-4 flex items-start gap-4">
+                <div className="flex items-center gap-2 ">
+                  <div className="w-8 h-8">
+                    <img
+                      src={post?.author.avatar}
+                      alt=""
+                      className=" h-full w-full rounded-full"
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: 'calc(200px - 100px)',
+                    }}
+                  >
+                    <p
+                      className="text-sm truncate"
+                      title={`${post?.author.firstName} ${post?.author.lastName}`}
+                    >
+                      {post?.author.firstName + ' ' + post?.author.lastName}
+                    </p>
+                    <p className="text-xs">
+                      {dayjs(post?.createdAt).fromNow()}
+                    </p>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <h1 className="text-text text-center ">{post.title}</h1>
+                </div>
               </div>
               <div>
                 <img
@@ -235,32 +197,38 @@ export default function PostPage() {
                       ({commentsLength})
                     </h1>
                     <div className="flex items-center gap-3">
-                      <div
-                        className="flex items-center justify-center flex-col"
-                        onClick={handleLikeClick}
-                      >
-                        {isLiked ? (
-                          <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                        ) : (
-                          <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                        )}
-                        <p className="text-xs">{likes}</p>
-                      </div>
-                      <div
-                        className="flex items-center justify-center flex-col"
-                        onClick={handleDislikeClick}
-                      >
-                        {isDisLiked ? (
-                          <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                        ) : (
-                          <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
-                        )}
-                        <p className="text-xs">{dislikes}</p>
-                      </div>
-                      <div className="flex items-center justify-center flex-col">
-                        <BsShare className="hover:fill-blue-500 hover:scale-125 transition-scale transition duration-300 w-5" />
-                        <p className="text-xs">{post.disLikes?.length || 0}</p>
-                      </div>
+                      <LikeButton
+                        currentUser={currentUser}
+                        isDisLiked={isDisLiked}
+                        isLiked={isLiked}
+                        likes={likes}
+                        notify={notify}
+                        postId={postId}
+                        setDislikes={setDislikes}
+                        setIsDisLiked={setIsDisLiked}
+                        setIsLiked={setIsLiked}
+                        setLikes={setLikes}
+                      />
+                      <DislikeButton
+                        currentUser={currentUser}
+                        isDisLiked={isDisLiked}
+                        isLiked={isLiked}
+                        notify={notify}
+                        postId={postId}
+                        setDislikes={setDislikes}
+                        setIsDisLiked={setIsDisLiked}
+                        setIsLiked={setIsLiked}
+                        setLikes={setLikes}
+                        dislikes={dislikes}
+                      />
+                      {/* share */}
+                      <ShareButton
+                        copied={copied}
+                        notify={notify}
+                        postId={postId}
+                        setSahresLength={setSahresLength}
+                        sharesLength={sharesLength}
+                      />
                     </div>
                   </div>
                   <div className="relative">
@@ -379,9 +347,9 @@ export default function PostPage() {
             <div className="w-full md:w-auto ">
               <h1 className="mb-2 w-full text-xl">Related posts:</h1>
               <div className="flex flex-col items-center justify-center gap-4">
+                {/* <PostItem />
                 <PostItem />
-                <PostItem />
-                <PostItem />
+                <PostItem /> */}
               </div>
             </div>
           </div>

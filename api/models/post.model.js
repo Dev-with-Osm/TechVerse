@@ -13,8 +13,8 @@ var postSchema = new mongoose.Schema(
     },
     hashtags: { type: String },
     author: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     image: {
       type: String,
@@ -52,7 +52,10 @@ var postSchema = new mongoose.Schema(
         },
       },
     ],
-    shares: [],
+    shares: {
+      type: Number,
+      default: 0,
+    },
     views: {
       type: Number,
       default: 0,

@@ -132,6 +132,7 @@ const getPost = asyncHandler(async (req, res) => {
     const getPost = await Post.findById(id)
       .populate('likes')
       .populate('disLikes')
+      .populate('author')
       .populate({
         path: 'comments',
         populate: { path: 'commentedBy' }, // Populate the 'commentedBy' field
@@ -185,7 +186,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
     const searchTerm = req.query.searchTerm || '';
-    const sort = req.query.sort || 'createdAt'; // Default sort by createdAt in descending order
+    const sort = req.query.sort || 'createdAt'; // Default sort by createdAt
     const order = req.query.order || 'desc';
 
     let sortConditions = {};
@@ -227,6 +228,22 @@ const getAllPosts = asyncHandler(async (req, res) => {
   }
 });
 
+const sharePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await Post.findByIdAndUpdate(
+      id,
+      {
+        $inc: { shares: 1 },
+      },
+      { new: true },
+    );
+    res.status(200).json({ message: 'post shared', post });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createNewPost,
   editPost,
@@ -235,13 +252,5 @@ module.exports = {
   getPost,
   addComment,
   getAllPosts,
+  sharePost,
 };
-//const page = parseInt(req.query.page) - 1 || 0;
-// // let sort = req.query.sort || 'likes';
-// console.log({
-//   limit,
-//   query: req.query,
-//   startIndex,
-// });
-// const posts = await Post.find({}).limit(limit).skip(startIndex);
-// res.json(posts);
