@@ -1,7 +1,7 @@
 // update user info
 const User = require('../models/user.model.js');
 const asyncHandler = require('express-async-handler');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Post = require('../models/post.model.js');
 
 const updateUser = asyncHandler(async (req, res) => {
