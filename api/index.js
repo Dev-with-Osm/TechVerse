@@ -13,12 +13,7 @@ const app = express();
 dbConn();
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({ allowedHeaders: true, origin: 'http://localhost:3000' }));
-
 const dirname = path.resolve();
-
-// Middleware
-const port = 4000;
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
@@ -33,6 +28,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(dirname, 'client', 'dist', 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(4000, () => {
+  console.log(`Server is running on port ${4000}`);
 });
