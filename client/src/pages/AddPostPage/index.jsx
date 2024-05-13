@@ -20,7 +20,6 @@ export default function AddPost() {
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState(null);
   const [uploadError, setUploadError] = useState(false);
-  console.log(uploadError);
   const [fileUploadPerc, setFileUploadPerc] = useState(0);
   const [loading, setLoading] = useState(false);
   const imageInputRef = useRef();
@@ -30,9 +29,6 @@ export default function AddPost() {
     image: '',
     hashtags: '',
   });
-
-  console.log(formData.image);
-
   const [errors, setErrors] = useState({
     title: '',
     body: '',

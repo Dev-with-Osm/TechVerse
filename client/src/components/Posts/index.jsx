@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa6';
-
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
@@ -39,8 +38,6 @@ export default function PostItem({ PostItem, id }) {
       (dislike) => dislike._id === currentUser?._id,
     );
     setSahresLength(shares);
-    console.log(shares);
-
     setIsLiked(liked);
     setIsDisLiked(disliked);
     setLikes(post?.likes?.length || 0);
@@ -153,19 +150,6 @@ export default function PostItem({ PostItem, id }) {
         </div>
       </div>
       <Toaster />
-      {/* <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      /> */}
     </>
   );
 }

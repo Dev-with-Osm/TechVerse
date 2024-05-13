@@ -10,6 +10,7 @@ const {
   addComment,
   getAllPosts,
   sharePost,
+  deletePost,
 } = require('../controllers/post.controller');
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.put('/edit-post/:id', verifyToken, editPost);
 router.put('/like-post', verifyToken, likePost);
 router.put('/dislike-post', verifyToken, dislikePost);
 router.put('/add-comment/:id', verifyToken, addComment);
+router.delete('/delete-post/:id', verifyToken, deletePost);
 router.get('/share/:id', sharePost);
 router.get('/get-post/:id', getPost);
 router.get('/all-posts', getAllPosts);

@@ -21,7 +21,7 @@ const editPost = asyncHandler(async (req, res) => {
     if (!post) {
       throw new Error('Post not found');
     }
-    if (req.user.id !== post.author) {
+    if (req.user.id !== post.authorId) {
       throw new Error('You are not authorized to edit this post');
     }
     const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
@@ -244,6 +244,23 @@ const sharePost = asyncHandler(async (req, res) => {
   }
 });
 
+const deletePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await Post.findById(id);
+    if (!post) {
+      throw new Error('Post Not Found');
+    }
+    if (post?.authorId !== req.user.id) {
+      throw new Error('You are not authorized to delete this post');
+    }
+    await post.deleteOne();
+    res.json(post);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createNewPost,
   editPost,
@@ -253,4 +270,5 @@ module.exports = {
   addComment,
   getAllPosts,
   sharePost,
+  deletePost,
 };
