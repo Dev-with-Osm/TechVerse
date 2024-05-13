@@ -11,8 +11,7 @@ export default function LeftHomePage() {
       <div className="px-4 md:px-0">
         {currentUser ? (
           <h1 className="text-3xl md:text-[42px] md:leading-snug text-center md:text-left leading-snug font-medium  ">
-            Now, Amplify Your Voice: Share Your Latest Tech Discoveries and
-            Gaming Experiences with Teck
+            Share Your Tech and Gaming Discoveries on Teck
             <span className="text-text">Verse</span>
           </h1>
         ) : (
