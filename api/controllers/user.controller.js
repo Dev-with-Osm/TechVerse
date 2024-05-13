@@ -36,15 +36,17 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 const getUserPosts = asyncHandler(async (req, res) => {
-  if (req.user.id === req.params.id) {
-    try {
-      const post = await Post.find({ author: req.params.id });
-      res.status(200).json(post);
-    } catch (error) {
-      throw new Error(error);
+  try {
+    if (req.user.id !== req.params.id) {
+      throw new Error('You are not authorized to get this user posts');
     }
-  } else {
-    return res.status(401).json('you can only get your own posts');
+
+    const userPosts = await Post.find({ authorId: req.user.id });
+
+    res.status(200).json(userPosts);
+  } catch (error) {
+    throw new Error(error);
   }
 });
+
 module.exports = { updateUser, getUserPosts };

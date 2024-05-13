@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
-
   return (
     <div className="shadow-sm text-white">
       <div className=" flex justify-between items-center py-4 md:py-0 max-w-[1240px] mx-auto px-4">

@@ -14,8 +14,7 @@ import {
   signOutUserStart,
   signOutUserSuccess,
 } from '../../../redux/user/userSlice';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
 import LogoutModal from '../../Modals/LogoutModal';
 
 export default function UserActions() {
@@ -45,15 +44,13 @@ export default function UserActions() {
   };
   const notify = () =>
     toast.success('Logged out successfully', {
+      duration: 2000,
       position: 'bottom-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-      transition: Bounce,
+
+      style: {
+        borderRadius: '10px',
+        fontSize: '14px',
+      },
     });
 
   const handleLogout = () => {
@@ -135,7 +132,7 @@ export default function UserActions() {
 
               <Link
                 onClick={handleCloseMenu}
-                to={'/sign-in'}
+                to={'/my-posts'}
                 className="hover:border  flex items-center overflow-hidden justify-center rounded-md gap-2 w-40 h-12 hover:text-text hover:bg-black/20 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <PiFilesLight className="text-lg" />
@@ -174,7 +171,7 @@ export default function UserActions() {
           )}
         </div>
       </OutsideClickHandler>
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-right"
         autoClose={2000}
         hideProgressBar={false}
@@ -186,7 +183,8 @@ export default function UserActions() {
         pauseOnHover
         theme="dark"
         transition={Bounce}
-      />
+      /> */}
+      <Toaster />
     </>
   );
 }

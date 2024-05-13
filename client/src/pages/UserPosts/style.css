@@ -1,0 +1,14 @@
+.user-posts-container {
+  width: fit-content;
+}
+
+.user-posts-container-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-posts-container:hover {
+  .user-posts-container-btn {
+    transform: scale(1.05);
+  }
+}

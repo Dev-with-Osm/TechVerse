@@ -69,7 +69,11 @@ export default function AddPost() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, author: currentUser }),
+        body: JSON.stringify({
+          ...formData,
+          author: currentUser,
+          authorId: currentUser._id,
+        }),
       });
       const data = await res.json();
       if (data.message === false) {

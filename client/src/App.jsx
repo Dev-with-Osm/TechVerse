@@ -10,6 +10,8 @@ import PageNotFound from './pages/PageNotFound';
 import AboutPage from './pages/AboutPage';
 import AddPost from './pages/AddPostPage';
 import PostPage from './pages/PostPage';
+import UserPosts from './pages/UserPosts';
+import EditPost from './pages/EditPost';
 
 export default function App() {
   return (
@@ -23,8 +25,11 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/post/:postId" element={<PostPage />} />
         <Route element={<PrivateRoute />}>
+          <Route path="edit-post/:postId" element={<EditPost />} />
+
           <Route path="/profile" element={<Profile />} />
           <Route path="/new-post" element={<AddPost />} />
+          <Route path="/my-posts" element={<UserPosts />} />
         </Route>
       </Routes>
     </BrowserRouter>
