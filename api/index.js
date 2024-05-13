@@ -19,14 +19,13 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
 
-app.use(notFound);
-app.use(errorHandler);
-
 app.use(express.static(path.join(dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(dirname, 'client', 'dist', 'index.html'));
 });
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(4000, () => {
   console.log(`Server is running on port ${4000}`);
