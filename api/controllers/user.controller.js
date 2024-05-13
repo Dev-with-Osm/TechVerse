@@ -4,6 +4,10 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const Post = require('../models/post.model.js');
 
+const test = asyncHandler(async (req, res) =>
+  res.status(200).json({ message: 'User route works' }),
+);
+
 const updateUser = asyncHandler(async (req, res) => {
   try {
     if (req.user.id !== req.params.id) {
@@ -49,4 +53,4 @@ const getUserPosts = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { updateUser, getUserPosts };
+module.exports = { updateUser, getUserPosts, test };

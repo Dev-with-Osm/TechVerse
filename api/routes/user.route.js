@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post('/update/:id', verifyToken, updateUser);
 router.get('/posts/:id', verifyToken, getUserPosts);
+router.get('/', getUserPosts);
 
 module.exports = router;
