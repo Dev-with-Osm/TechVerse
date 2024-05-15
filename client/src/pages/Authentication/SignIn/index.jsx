@@ -84,7 +84,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex items-center justify-center mt-10 p-4">
+    <div className="flex items-center h-screen justify-center -mt-10 p-4">
       {showPopup && (
         <ConfirmationModal open={showPopup}>
           <div className="text-center ">
