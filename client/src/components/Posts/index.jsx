@@ -135,17 +135,19 @@ export default function PostItem({ PostItem, id }) {
             sharesLength={sharesLength}
           />
         </div>
-        <div className="px-2 flex flex-col justify-between ">
-          <div>
-            <p className="text-[10px] text-slate-300">
-              {post.views} <span>View(s)</span>
-            </p>
-          </div>
-          <div className="flex justify-between items-center mb-1">
-            <p className="text-[10px]">
-              View all {post.comments?.length || 0} comment...
-            </p>
-            <p className="text-[10px]">{fromNow}</p>
+        <div className="absolute bottom-0 w-full pr-4 py-1 pl-2">
+          <div className=" flex flex-col justify-between ">
+            <div>
+              <p className="text-[10px] text-slate-300">
+                {post.views} <span>View(s)</span>
+              </p>
+            </div>
+            <div className="flex justify-between items-center mb-1">
+              <p className="text-[10px]">
+                View all {post.comments?.length || 0} comment...
+              </p>
+              <p className="text-[10px] ">{fromNow}</p>
+            </div>
           </div>
         </div>
       </div>
