@@ -1,5 +1,6 @@
 import React from 'react';
 import { BsHandThumbsDown, BsHandThumbsDownFill } from 'react-icons/bs';
+import ReactionSpinner from './ReactionSpinner';
 export default function DislikeButton({
   currentUser,
   postId,
@@ -12,12 +13,14 @@ export default function DislikeButton({
   notify,
   isLiked,
 }) {
+  const [dislikeLoading, setDislikeLoading] = useState(false);
   const handleDislikeClick = async () => {
     if (!currentUser) {
-      console.log('you can not like before sign in ');
+      console.log('you can not like before sign in');
       notify('dislike');
       return;
     }
+    setDislikeLoading(true);
     try {
       const res = await fetch('/api/post/dislike-post', {
         method: 'PUT',
@@ -28,6 +31,7 @@ export default function DislikeButton({
       });
       const data = await res.json();
       if (data.success === false) {
+        setDislikeLoading(false);
         return console.log(data);
       }
       setDislikes((prevDislikes) => {
@@ -42,8 +46,10 @@ export default function DislikeButton({
         setLikes((prevLikes) => prevLikes - 1);
         setIsLiked(false);
       }
+      setDislikeLoading(false);
     } catch (error) {
       console.log(error);
+      setDislikeLoading(false);
     }
   };
   return (
@@ -51,12 +57,18 @@ export default function DislikeButton({
       className="flex items-center justify-center flex-col"
       onClick={handleDislikeClick}
     >
-      {isDisLiked ? (
-        <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+      {dislikeLoading ? (
+        <ReactionSpinner />
       ) : (
-        <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+        <>
+          {isDisLiked ? (
+            <BsHandThumbsDownFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+          ) : (
+            <BsHandThumbsDown className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+          )}
+          <p className="text-xs">{dislikes}</p>
+        </>
       )}
-      <p className="text-xs">{dislikes}</p>
     </div>
   );
 }

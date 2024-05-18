@@ -51,6 +51,7 @@ export default function LikeButton({
       setLikeLoading(false);
     } catch (error) {
       console.log(error);
+      setLikeLoading(false);
     }
   };
   return (
