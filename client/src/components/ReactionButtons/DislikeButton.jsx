@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BsHandThumbsDown, BsHandThumbsDownFill } from 'react-icons/bs';
 import ReactionSpinner from './ReactionSpinner';
 export default function DislikeButton({
