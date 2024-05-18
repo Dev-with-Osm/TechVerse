@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BsHandThumbsUp, BsHandThumbsUpFill } from 'react-icons/bs';
+import Loader from '../Loader';
+import ReactionSpinner from './ReactionSpinner';
 
 export default function LikeButton({
   likes,
@@ -13,6 +15,7 @@ export default function LikeButton({
   postId,
   setLikes,
 }) {
+  const [likeLoading, setLikeLoading] = useState(false);
   const handleLikeClick = async () => {
     try {
       if (!currentUser) {
@@ -20,6 +23,7 @@ export default function LikeButton({
         notify('like');
         return;
       }
+      setLikeLoading(true);
       const res = await fetch('/api/post/like-post', {
         method: 'PUT',
         headers: {
@@ -29,6 +33,7 @@ export default function LikeButton({
       });
       const data = await res.json();
       if (data.success === false) {
+        setLikeLoading(false);
         return console.log(data);
       }
       setLikes((prevLikes) => {
@@ -43,7 +48,7 @@ export default function LikeButton({
         setDislikes((prevDislikes) => prevDislikes - 1);
         setIsDisLiked(false);
       }
-      console.log(data);
+      setLikeLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -53,12 +58,18 @@ export default function LikeButton({
       className="flex items-center justify-center flex-col"
       onClick={handleLikeClick}
     >
-      {isLiked ? (
-        <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+      {likeLoading ? (
+        <ReactionSpinner />
       ) : (
-        <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+        <>
+          {isLiked ? (
+            <BsHandThumbsUpFill className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+          ) : (
+            <BsHandThumbsUp className="hover:fill-red-300 hover:scale-125 transition-scale transition duration-300 w-5" />
+          )}
+          <p className="text-xs">{likes}</p>
+        </>
       )}
-      <p className="text-xs">{likes}</p>
     </div>
   );
 }
