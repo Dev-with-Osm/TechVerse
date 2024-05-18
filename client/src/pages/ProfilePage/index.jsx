@@ -127,17 +127,18 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex items-center justify-center  p-4">
+    <div className="flex items-center justify-center h-screen  p-4">
       {showPopup && (
         <ConfirmationModal open={showPopup}>
           <div className="text-center ">
             <div className="mx-auto my-4">
-              <h3 className="text-lg font-black text-green-400">
-                Registration successfully done
+              <h3 className="text-lg font-medium  text-green-400">
+                Your profile updated successfully
               </h3>
-              <h3 className="text-lg font-black text-black">
-                welcome to the community
-              </h3>
+              <p className="text-sm text-black mt-5">
+                Your profile has been updated. <br /> Enjoy your personalized
+                experience.
+              </p>
             </div>
             <div className="flex gap-4 items-center justify-center">
               <button

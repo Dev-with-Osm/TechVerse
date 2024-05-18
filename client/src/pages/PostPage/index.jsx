@@ -143,9 +143,13 @@ export default function PostPage() {
             <Loader />
           </div>
         )}
-        {error && <p>{error}</p>}
+        {error && (
+          <div className="h-screen">
+            <p>{error}</p>
+          </div>
+        )}
         {post && (
-          <div className=" flex flex-col gap-10 justify-center items-center md:items-start md:flex-row p-5">
+          <div className=" flex flex-col gap-10 justify-center items-center md:items-start h-full md:flex-row p-5">
             <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4 md:w-3/5 w-full h-fit">
               <div className="md:px-4 flex items-start gap-4">
                 <div className="flex items-center gap-2 ">

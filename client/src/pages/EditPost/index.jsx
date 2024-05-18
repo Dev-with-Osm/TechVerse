@@ -176,7 +176,7 @@ export default function EditPost() {
     });
 
   return (
-    <main className="p-3 max-w-4xl mx-auto">
+    <main className="p-3 max-w-4xl h-screen mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Edit Post:</h1>
       <form
         onSubmit={handleSubmitPost}
@@ -344,8 +344,9 @@ export default function EditPost() {
         </div>
 
         <button
+          disabled={loading}
           type="submit"
-          className="bg-primary hover:border-[#755d8c] transition-all duration-300 ease-in-out py-2  w-full rounded-md text-black  hover:bg-text"
+          className="bg-primary disabled:cursor-not-allowed hover:border-[#755d8c] transition-all duration-300 ease-in-out py-2  w-full rounded-md text-black  hover:bg-text"
         >
           Edit Post
         </button>

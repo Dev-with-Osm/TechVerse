@@ -68,7 +68,7 @@ export default function UserPosts() {
   };
 
   return (
-    <div className=" flex flex-col justify-center items-center mt-20">
+    <div className=" flex flex-col justify-center h-screen items-center -mt-20 ">
       {loading ? (
         <div className="h-screen flex items-center justify-center -mt-20">
           <Loader />

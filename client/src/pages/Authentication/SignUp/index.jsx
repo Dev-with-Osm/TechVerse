@@ -104,7 +104,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex items-center justify-center  p-4">
+    <div className="flex items-center justify-center h-screen  p-4">
       {showPopup && (
         <ConfirmationModal open={showPopup}>
           <div className="text-center ">
