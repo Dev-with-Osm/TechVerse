@@ -80,7 +80,7 @@ export default function PostItem({ PostItem, id }) {
   return (
     <>
       <div
-        className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg hover:scale-105 transition-scale duration-300"
+        className="w-[300px] h-[400px] relative border flex flex-col gap-3 cursor-pointer bg-[#1B1C1C] shadow-white p-1 rounded-lg md:hover:scale-105 md:transition-scale duration-300"
         style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
       >
         <Link

@@ -79,7 +79,7 @@ export default function UserPosts() {
             userPosts.map((post) => (
               <div key={post._id}>
                 <div
-                  className="w-[300px] h-full cursor-pointer p-1 pb-3 rounded-md bg-[#1B1C1C] shadow-white border flex flex-col gap-3"
+                  className="w-[300px] h-[350px] cursor-pointer relative p-1 pb-3 rounded-md bg-[#1B1C1C] shadow-white border flex flex-col gap-3"
                   style={{ boxShadow: 'rgba(149, 157, 165, 0.1) 0px 8px 24px' }}
                 >
                   <Link
@@ -99,21 +99,23 @@ export default function UserPosts() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex justify-center items-center gap-5">
-                    <Link
-                      to={`/edit-post/${post._id}`}
-                      className="border border-green-500 w-24 flex items-center justify-center gap-1  left-0 py-1 rounded-md hover:bg-green-500 transition ease-in-out duration-150"
-                    >
-                      <FiEdit />
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDeletePost(post._id)}
-                      className="border border-red-500 flex items-center justify-center gap-1 w-24  right-0  py-1 rounded-md hover:bg-red-500 transition ease-in-out duration-150"
-                    >
-                      <BsTrash />
-                      Delete
-                    </button>
+                  <div className="absolute bottom-0 w-full pr-4 py-2 pl-2">
+                    <div className="flex justify-center items-center   gap-5">
+                      <Link
+                        to={`/edit-post/${post._id}`}
+                        className="border border-green-500 w-24 flex items-center justify-center gap-1  left-0 py-1 rounded-md hover:bg-green-500 transition ease-in-out duration-150"
+                      >
+                        <FiEdit />
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDeletePost(post._id)}
+                        className="border border-red-500 flex items-center justify-center gap-1 w-24  right-0  py-1 rounded-md hover:bg-red-500 transition ease-in-out duration-150"
+                      >
+                        <BsTrash />
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

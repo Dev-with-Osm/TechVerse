@@ -2,19 +2,21 @@ import React, { useEffect, useState } from 'react';
 
 import { IoSendOutline } from 'react-icons/io5';
 import { useParams } from 'react-router-dom';
-import Loader from '../../components/Loader';
+// import Loader from '../../components/Loader';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import toast, { Toaster } from 'react-hot-toast';
-import LikeButton from '../../components/ReactionButtons/LikeButton';
-import DislikeButton from '../../components/ReactionButtons/DislikeButton';
+// import LikeButton from '../../components/ReactionButtons/LikeButton';
+// import DislikeButton from '../../components/ReactionButtons/DislikeButton';
 import { FaRegCopy } from 'react-icons/fa6';
-import ShareButton from '../../components/ReactionButtons/ShareButton';
-import RelatedPosts from './components/RelatedPosts';
+// import ShareButton from '../../components/ReactionButtons/ShareButton';
+import Loader from '../../../../components/Loader';
+import LikeButton from '../../../../components/ReactionButtons/LikeButton';
+import DislikeButton from '../../../../components/ReactionButtons/DislikeButton';
+import ShareButton from '../../../../components/ReactionButtons/ShareButton';
 
-export default function PostPage() {
-  const { postId } = useParams();
+export default function PostPage({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState(false);
   const [isDisLiked, setIsDisLiked] = useState(false);
@@ -31,7 +33,6 @@ export default function PostPage() {
   const [sharesLength, setSahresLength] = useState(0);
   const [copied, setCopied] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
-  const [hashtags, setHashtags] = useState([]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -57,9 +58,9 @@ export default function PostPage() {
   }, [postId]);
 
   useEffect(() => {
-    const postHashtags = post?.hashtags
-      ? post?.hashtags.split(/[# ]+/).filter(Boolean).toString()
-      : [];
+    // const postHashtags = post?.hashtags
+    //   ? post?.hashtags.split(/[# ]+/).filter(Boolean).toString()
+    //   : [];
     const postLink = window.location.href;
     const shares = post?.shares;
     const user = currentUser;
@@ -71,7 +72,7 @@ export default function PostPage() {
     const disliked = post?.disLikes?.some(
       (dislike) => dislike._id === currentUser?._id,
     );
-    setHashtags(postHashtags);
+    // setHashtags(postHashtags);
     setUser(user);
     setIsLiked(liked);
     setIsDisLiked(disliked);
@@ -153,8 +154,8 @@ export default function PostPage() {
           </div>
         )}
         {post && (
-          <div className=" flex flex-col gap-10 justify-center items-center md:items-start h-full md:flex-row p-5">
-            <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4 md:w-3/5 w-full h-fit">
+          <div className=" flex flex-col gap-10 justify-center items-center md:items-start h-full md:flex-row px-2">
+            <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4  w-full h-fit">
               <div className="md:px-4 flex items-start gap-4">
                 <div className="flex items-center gap-2 ">
                   <div className="w-8 h-8">
@@ -350,12 +351,6 @@ export default function PostPage() {
                     </button>
                   )}
                 </div>
-              </div>
-            </div>
-            <div className="w-full md:w-auto ">
-              <h1 className="mb-2 w-full text-xl">Related posts:</h1>
-              <div className="flex flex-col items-center justify-center gap-4">
-                <RelatedPosts hashtags={hashtags} currentPostId={postId} />
               </div>
             </div>
           </div>

@@ -137,13 +137,13 @@ const getPost = asyncHandler(async (req, res) => {
         path: 'comments',
         populate: { path: 'commentedBy' }, // Populate the 'commentedBy' field
       });
-    await Post.findByIdAndUpdate(
-      id,
-      {
-        $inc: { views: 1 },
-      },
-      { new: true },
-    );
+    // await Post.findByIdAndUpdate(
+    //   id,
+    //   {
+    //     $inc: { views: 1 },
+    //   },
+    //   { new: true },
+    // );
     if (!getPost) {
       return res.status(404).json({ message: 'Post not found' });
     }
