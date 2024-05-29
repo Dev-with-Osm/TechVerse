@@ -57,7 +57,7 @@ export default function PostsPage() {
           {posts.length > 0 &&
             posts.map((post) => <PostPage key={post._id} postId={post._id} />)}
           {posts.length === 0 && (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center h-screen md:h-[85vh]">
               <p className="text-primary text-lg">No posts found!</p>
             </div>
           )}
