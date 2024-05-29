@@ -39,12 +39,8 @@ export default function Navbar() {
         <OutsideClickHandler onOutsideClick={() => setNav(false)}>
           {/* Mobile Navigation */}
           <div className="flex items-center justify-center gap-5">
-            <div className="hidden md:block">
-              <SearchBarForResponsive
-                className={
-                  'text-white placeholder:text-white border-text-secondary border-[0.5px] placeholder:text-sm'
-                }
-              />
+            <div className="">
+              <SearchBarForResponsive />
             </div>
 
             <UserActions />
@@ -59,8 +55,6 @@ export default function Navbar() {
             {/* Mobile Logo */}
             {/* Mobile Navigation Items */}
             <div className="mt-5">
-              <SearchBarForResponsive />
-
               {navigation.map((item) => (
                 <li
                   key={item.id}
