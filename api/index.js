@@ -7,6 +7,7 @@ const dbConn = require('./config/dbConnection');
 const authRouter = require('./routes/auth.route.js');
 const userRouter = require('./routes/user.route.js');
 const postRouter = require('./routes/post.route.js');
+const supportRouter = require('./routes/support.route.js');
 const { notFound, errorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express();
@@ -18,6 +19,7 @@ const dirname = path.resolve();
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
+app.use('/api/support', supportRouter);
 
 app.use(express.static(path.join(dirname, '/client/dist')));
 

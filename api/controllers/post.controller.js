@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/post.model.js');
 const validateDbId = require('../utils/validateDbId.js');
-const mongoose = require('mongoose');
 
 // add new post
 const createNewPost = asyncHandler(async (req, res) => {
