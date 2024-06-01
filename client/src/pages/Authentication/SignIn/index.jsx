@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoLockClosedOutline, IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { PiEyeLight, PiEyeSlash } from 'react-icons/pi';
@@ -82,6 +82,10 @@ export default function SignInPage() {
       }
     }
   };
+
+  useEffect(() => {
+    document.title = 'TechVerse - Sign in';
+  }, []);
 
   return (
     <div className="flex items-center h-screen justify-center -mt-10 p-4">

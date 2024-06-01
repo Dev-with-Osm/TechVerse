@@ -24,6 +24,7 @@ export default function PostsPage() {
   };
 
   useEffect(() => {
+    document.title = 'TechVerse - Posts';
     fetchTrendingPost(searchTerm);
   }, [searchTerm]);
 

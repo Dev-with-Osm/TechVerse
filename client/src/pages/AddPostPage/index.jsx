@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LuPenLine } from 'react-icons/lu';
 import { app } from '../../firebase';
 import { FaHashtag } from 'react-icons/fa';
@@ -11,7 +11,6 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { useSelector } from 'react-redux';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,6 +35,10 @@ export default function AddPost() {
   });
 
   let uploadTask = null; // Track upload task directly
+
+  useEffect(() => {
+    document.title = 'TechVerse - Add post';
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -75,7 +78,6 @@ export default function AddPost() {
       if (data.message === false) {
         console.log(data.message);
       }
-      notify();
       navigate(`/post/${data._id}`);
       console.log(data);
     }
@@ -144,21 +146,8 @@ export default function AddPost() {
     }
   };
 
-  const notify = () =>
-    toast.success('Your post has been successfully published', {
-      position: 'bottom-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-      transition: Bounce,
-    });
-
   return (
-    <main className="p-3 max-w-4xl mx-auto">
+    <main className="p-3 max-w-4xl h-screen mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Add Post:</h1>
       <form
         onSubmit={handleSubmitPost}
@@ -321,19 +310,6 @@ export default function AddPost() {
           Submit Post
         </button>
       </form>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
     </main>
   );
 }

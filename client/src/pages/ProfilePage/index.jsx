@@ -46,6 +46,10 @@ export default function Profile() {
   });
 
   useEffect(() => {
+    document.title = 'TechVerse - Profile';
+  }, []);
+
+  useEffect(() => {
     if (file) {
       handleFile(file);
     }

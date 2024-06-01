@@ -11,8 +11,6 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { useSelector } from 'react-redux';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-// import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function EditPost() {
@@ -48,6 +46,8 @@ export default function EditPost() {
   };
 
   useEffect(() => {
+    document.title = 'TechVerse';
+
     const fetchPost = async () => {
       try {
         const res = await fetch(`/api/post/get-post/${postId}`);
@@ -93,7 +93,6 @@ export default function EditPost() {
       if (data.message === false) {
         console.log(data.message);
       }
-      notify();
       navigate(`/post/${data._id}`);
       console.log(data);
     }
@@ -161,19 +160,6 @@ export default function EditPost() {
       console.log(error);
     }
   };
-
-  const notify = () =>
-    toast.success('Your post has been successfully published', {
-      position: 'bottom-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-      transition: Bounce,
-    });
 
   return (
     <main className="p-3 max-w-4xl h-screen mx-auto">
@@ -351,19 +337,6 @@ export default function EditPost() {
           Edit Post
         </button>
       </form>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
     </main>
   );
 }

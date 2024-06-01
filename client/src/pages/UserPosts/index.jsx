@@ -16,38 +16,9 @@ export default function UserPosts() {
   const [postIdToDelete, setPostIdToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const handleDeleteClick = async (id) => {
-    console.log(id);
-    try {
-      const res = await fetch(`/api/post/delete-post/${id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-      console.log(data);
-      if (data.success === false) {
-        return console.log(data);
-      }
-      setShowPopup(false);
-      setUserPosts((prev) => prev.filter((post) => post._id !== id));
-      notify();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const notify = () => {
-    toast.success('Post deleted successfully! ', {
-      duration: 2000,
-      position: 'bottom-right',
-
-      style: {
-        borderRadius: '10px',
-        fontSize: '14px',
-      },
-    });
-  };
-
   useEffect(() => {
+    document.title = 'TechVerse - My Posts';
+
     const fetchUserPosts = async () => {
       try {
         const res = await fetch(`/api/user/posts/${currentUser?._id}`);
@@ -55,12 +26,40 @@ export default function UserPosts() {
         setUserPosts(data);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setLoading(false);
       }
     };
+
     fetchUserPosts();
-  }, [currentUser?.id]);
+  }, [currentUser?._id]);
+
+  const handleDeleteClick = async (id) => {
+    try {
+      const res = await fetch(`/api/post/delete-post/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        console.error(data);
+        return;
+      }
+
+      setShowPopup(false);
+      setUserPosts((prev) => prev.filter((post) => post._id !== id));
+      toast.success('Post deleted successfully!', {
+        duration: 2000,
+        position: 'bottom-right',
+        style: {
+          borderRadius: '10px',
+          fontSize: '14px',
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleDeletePost = (postId) => {
     setPostIdToDelete(postId);
@@ -68,65 +67,66 @@ export default function UserPosts() {
   };
 
   return (
-    <div className=" flex flex-col justify-center h-screen items-center -mt-20 ">
+    <div className="flex flex-col justify-center h-screen items-center -mt-20">
       {loading ? (
         <div className="h-screen flex items-center justify-center -mt-20">
           <Loader />
         </div>
-      ) : (
+      ) : userPosts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-y-8 md:gap-x-16">
-          {userPosts &&
-            userPosts.map((post) => (
-              <div key={post._id}>
-                <div
-                  className="w-[300px] h-[350px] cursor-pointer relative p-1 pb-3 rounded-md bg-[#1B1C1C] shadow-white border flex flex-col gap-3"
-                  style={{ boxShadow: 'rgba(149, 157, 165, 0.1) 0px 8px 24px' }}
-                >
-                  <Link
-                    to={`/post/${post._id}`}
-                    className="w-full h-[200px] rounded-md "
-                    style={{
-                      backgroundImage: `Url(${post.image})`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></Link>
-                  <div className="px-2">
-                    <div className="flex flex-col gap-2">
-                      <h2 className="text-sm line-clamp-2">{post.title}</h2>
-                      <p className="text-[11px] line-clamp-3 text-white/85">
-                        {post.body}
-                      </p>
-                    </div>
+          {userPosts.map((post) => (
+            <div key={post._id}>
+              <div
+                className="w-[300px] h-[370px] cursor-pointer relative p-1 pb-3 rounded-md bg-[#1B1C1C] shadow-white border flex flex-col gap-3"
+                style={{ boxShadow: 'rgba(149, 157, 165, 0.1) 0px 8px 24px' }}
+              >
+                <Link
+                  to={`/post/${post._id}`}
+                  className="w-full h-[200px] rounded-md"
+                  style={{
+                    backgroundImage: `url(${post.image})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                ></Link>
+                <div className="px-2">
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-sm line-clamp-2">{post.title}</h2>
+                    <p className="text-[11px] line-clamp-3 text-white/85">
+                      {post.body}
+                    </p>
                   </div>
-                  <div className="absolute bottom-0 w-full pr-4 py-2 pl-2">
-                    <div className="flex justify-center items-center   gap-5">
-                      <Link
-                        to={`/edit-post/${post._id}`}
-                        className="border border-green-500 w-24 flex items-center justify-center gap-1  left-0 py-1 rounded-md hover:bg-green-500 transition ease-in-out duration-150"
-                      >
-                        <FiEdit />
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => handleDeletePost(post._id)}
-                        className="border border-red-500 flex items-center justify-center gap-1 w-24  right-0  py-1 rounded-md hover:bg-red-500 transition ease-in-out duration-150"
-                      >
-                        <BsTrash />
-                        Delete
-                      </button>
-                    </div>
+                </div>
+                <div className="absolute bottom-0 w-full pr-4 py-2 pl-2">
+                  <div className="flex justify-center items-center gap-5">
+                    <Link
+                      to={`/edit-post/${post._id}`}
+                      className="border border-green-500 w-24 flex items-center justify-center gap-1 py-1 rounded-md hover:bg-green-500 transition ease-in-out duration-150"
+                    >
+                      <FiEdit />
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDeletePost(post._id)}
+                      className="border border-red-500 flex items-center justify-center gap-1 w-24 py-1 rounded-md hover:bg-red-500 transition ease-in-out duration-150"
+                    >
+                      <BsTrash />
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
+      ) : (
+        <h1 className="text-2xl text-white/80">No Posts</h1>
       )}
       {showPopup && (
         <LogoutModal open={showPopup} onClose={() => setShowPopup(false)}>
           <div className="text-center w-60">
             <div className="mx-auto my-4">
-              <h3 className="font-black text-black">Confirm delete</h3>
+              <h3 className="font-black text-black">Confirm Delete</h3>
               <p className="text-gray-400 text-sm mt-2">
                 Are you sure you want to delete this post?
               </p>

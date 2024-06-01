@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoLockClosedOutline, IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineMailOutline } from 'react-icons/md';
 
@@ -102,6 +102,10 @@ export default function SignUpPage() {
       }
     }
   };
+
+  useEffect(() => {
+    document.title = 'TechVerse - Sign up';
+  }, []);
 
   return (
     <div className="flex items-center justify-center h-screen  p-4">

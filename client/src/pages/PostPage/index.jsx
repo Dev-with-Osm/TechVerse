@@ -34,6 +34,8 @@ export default function PostPage() {
   const [hashtags, setHashtags] = useState([]);
 
   useEffect(() => {
+    document.title = 'TechVerse';
+
     const fetchPost = async () => {
       setLoading(true);
       try {

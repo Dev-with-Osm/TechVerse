@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PostItem from '../../components/Posts';
-import CursorAnimation from './components/CursorAnimation';
 import LeftHomePage from './components/LeftHomePage';
 import RightHomePage from './components/RightHomePage';
 import Statistics from './components/Statistics';
@@ -9,7 +7,6 @@ import TrandingPosts from './components/TrandingPosts';
 import { AiOutlineThunderbolt } from 'react-icons/ai';
 import { BsHandThumbsUp } from 'react-icons/bs';
 import MostLikedPosts from './components/MostLikedPosts';
-import { FaRegClock } from 'react-icons/fa6';
 import RecentPosts from './components/RecentPosts';
 import { LuCalendarClock } from 'react-icons/lu';
 
@@ -17,6 +14,8 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'TechVerse - Home';
+
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);

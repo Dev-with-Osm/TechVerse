@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function AboutPage() {
+  useEffect(() => {
+    document.title = 'TechVerse - About';
+  }, []);
   return (
     <div className="flex  items-center justify-center mt-5 p-3">
       <div className="md:max-w-3xl p-8 bg-white shadow-md text-black rounded-lg">
