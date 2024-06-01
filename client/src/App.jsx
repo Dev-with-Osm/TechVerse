@@ -14,6 +14,7 @@ import UserPosts from './pages/UserPosts';
 import EditPost from './pages/EditPost';
 import PostsPage from './pages/PostsPage';
 import Footer from './components/Footer';
+import SupportPage from './pages/SupportPage';
 
 export default function App() {
   return (
@@ -26,19 +27,17 @@ export default function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/about" element={<AboutPage />} />
-
+          <Route path="/support" element={<SupportPage />} />
           <Route path="/posts" element={<PostsPage />} />
           <Route path="/post/:postId" element={<PostPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="edit-post/:postId" element={<EditPost />} />
-
             <Route path="/profile" element={<Profile />} />
             <Route path="/new-post" element={<AddPost />} />
             <Route path="/my-posts" element={<UserPosts />} />
           </Route>
         </Routes>
       </div>
-
       <Footer />
     </BrowserRouter>
   );

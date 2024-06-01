@@ -36,6 +36,20 @@ export default function SignInPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (value && !emailRegex.test(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: 'Please enter a valid email address.',
+        }));
+      } else {
+        setErrors((prevErrors) => {
+          const { email, ...rest } = prevErrors;
+          return rest;
+        });
+      }
+    }
     setFormData({
       ...formData,
       [name]: value,
@@ -48,8 +62,6 @@ export default function SignInPage() {
     const newErrors = {};
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
     }
     if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
@@ -122,7 +134,7 @@ export default function SignInPage() {
           </h1>
         </div>
         <form
-          className="py-4 flex flex-col gap-3.5 md:w-[480px]"
+          className="py-4 flex flex-col gap-5 md:w-[480px]"
           onSubmit={handleSignUp}
         >
           <div className="flex justify-center gap-2 flex-col">
@@ -134,14 +146,16 @@ export default function SignInPage() {
                 placeholder="example@example.com"
                 disabled={loading}
                 className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] transition-all duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full disabled:cursor-not-allowed  placeholder:text-xs placeholder:text-text-secondary w-full ${
-                  errors.email && 'border-red-500'
+                  errors.email && '!border-red-500 focus:ring-red-500'
                 }`}
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                <p className="text-red-500 text-xs mt-1 absolute">
+                  {errors.email}
+                </p>
               )}
             </div>
           </div>
@@ -161,14 +175,16 @@ export default function SignInPage() {
                 placeholder="Secret Password"
                 disabled={loading}
                 className={`border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 disabled:cursor-not-allowed outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
-                  errors.password && 'border-red-500'
+                  errors.password && '!border-red-500 focus:ring-red-500'
                 }`}
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
               />
               {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                <p className="text-red-500 text-xs mt-1 absolute">
+                  {errors.password}
+                </p>
               )}
             </div>
           </div>

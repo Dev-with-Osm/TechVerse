@@ -42,6 +42,50 @@ export default function SignUpPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (value && !emailRegex.test(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: 'Please enter a valid email address.',
+        }));
+      } else {
+        setErrors((prevErrors) => {
+          const { email, ...rest } = prevErrors;
+          return rest;
+        });
+      }
+    }
+
+    if (name === 'firstName') {
+      const nameRegex = /^[A-Za-z ]*$/;
+      if (value && !nameRegex.test(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          firstName: 'First name should not contain numbers.',
+        }));
+      } else {
+        setErrors((prevErrors) => {
+          const { firstName, ...rest } = prevErrors;
+          return rest;
+        });
+      }
+    }
+
+    if (name === 'lastName') {
+      const nameRegex = /^[A-Za-z]*$/;
+      if (value && !nameRegex.test(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          lastName: 'Last name should only contain letters.',
+        }));
+      } else {
+        setErrors((prevErrors) => {
+          const { lastName, ...rest } = prevErrors;
+          return rest;
+        });
+      }
+    }
     setFormData({
       ...formData,
       [name]: value,
@@ -108,7 +152,7 @@ export default function SignUpPage() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen  p-4">
+    <div className="flex items-center justify-center h-screen my-3  p-4">
       {showPopup && (
         <ConfirmationModal open={showPopup}>
           <div className="text-center ">
@@ -142,8 +186,8 @@ export default function SignUpPage() {
             Create your account for free now
           </h1>
         </div>
-        <form className="py-4 flex flex-col gap-3.5" onSubmit={handleSignUp}>
-          <div className="flex justify-between flex-col md:flex-row gap-3">
+        <form className="py-4 flex flex-col gap-5" onSubmit={handleSignUp}>
+          <div className="flex justify-between flex-col md:flex-row gap-5">
             <div className="flex justify-center gap-2 flex-col">
               <FromLabel title={'First Name'} />
               <div>
@@ -152,7 +196,7 @@ export default function SignUpPage() {
                   disabled={loading}
                   type="text"
                   className={`disabled:cursor-not-allowed border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
-                    errors.firstName && 'border-red-500'
+                    errors.firstName && '!border-red-500 focus:ring-red-500'
                   }`}
                   placeholder="First Name"
                   name="firstName"
@@ -160,7 +204,7 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                 />
                 {errors.firstName && (
-                  <p className="text-red-500 text-xs mt-1">
+                  <p className="text-red-500 text-xs mt-1 absolute">
                     {errors.firstName}
                   </p>
                 )}
@@ -174,7 +218,7 @@ export default function SignUpPage() {
                   disabled={loading}
                   type="text"
                   className={`disabled:cursor-not-allowed border border-text-secondary focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
-                    errors.lastName && 'border-red-500'
+                    errors.lastName && '!border-red-500 focus:ring-red-500'
                   }`}
                   placeholder="Last Name"
                   name="lastName"
@@ -182,7 +226,9 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                 />
                 {errors.lastName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+                  <p className="text-red-500 text-xs mt-1 absolute ">
+                    {errors.lastName}
+                  </p>
                 )}
               </div>
             </div>
@@ -196,14 +242,16 @@ export default function SignUpPage() {
                 type="email"
                 placeholder={'example@example.com'}
                 className={`border border-text-secondary disabled:cursor-not-allowed focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
-                  errors.email && 'border-red-500'
+                  errors.email && '!border-red-500 focus:ring-red-500'
                 }`}
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                <p className="text-red-500 text-xs mt-1 absolute">
+                  {errors.email}
+                </p>
               )}
             </div>
           </div>
@@ -223,14 +271,16 @@ export default function SignUpPage() {
                 type={showPassword ? 'text' : 'password'}
                 placeholder={'Secret Password'}
                 className={`border border-text-secondary disabled:cursor-not-allowed focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
-                  errors.password && 'border-red-500'
+                  errors.password && '!border-red-500 focus:ring-red-500'
                 }`}
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
               />
               {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                <p className="text-red-500 text-xs mt-1 absolute">
+                  {errors.password}
+                </p>
               )}
             </div>
           </div>
@@ -250,14 +300,14 @@ export default function SignUpPage() {
                 type={showConfirmedPassword ? 'text' : 'password'}
                 placeholder={'Confirm secret Password'}
                 className={`border border-text-secondary disabled:cursor-not-allowed focus:border-0 bg-transparent hover:border-[#755d8c] focus:ring-2 outline-none focus:ring-[#755d8c] duration-300 ease-in-out cursor-pointer py-2.5 pl-10 rounded-full placeholder:text-xs placeholder:text-text-secondary w-full ${
-                  errors.confirmPassword && 'border-red-500'
+                  errors.confirmPassword && '!border-red-500 focus:ring-red-500'
                 }`}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
               />
               {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">
+                <p className="text-red-500 text-xs mt-1 absolute">
                   {errors.confirmPassword}
                 </p>
               )}
