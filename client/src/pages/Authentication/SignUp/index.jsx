@@ -95,17 +95,26 @@ export default function SignUpPage() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     // Validate form inputs
+    const firstNameRegex = /^[A-Za-z ]*$/;
+    const lastNameRegex = /^[A-Za-z]*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const newErrors = {};
     if (!formData.firstName.trim()) {
       newErrors.firstName = 'First Name is required';
+    } else if (!firstNameRegex.test(formData.firstName.trim())) {
+      newErrors.firstName = 'First Name should not contain numbers.';
     }
+
     if (!formData.lastName.trim()) {
       newErrors.lastName = 'Last Name is required';
+    } else if (!lastNameRegex.test(formData.lastName.trim())) {
+      newErrors.lastName = 'Last Name should only contain letters.';
     }
+
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = 'Email is not valid.';
     }
     if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
@@ -158,10 +167,10 @@ export default function SignUpPage() {
           <div className="text-center ">
             <Lottie animationData={done} className=" w-40 mx-auto" />
             <div className="mx-auto my-4">
-              <h3 className="text-lg font-black text-green-400">
+              <h3 className="text-lg font-medium text-green-400">
                 Registration successfully done
               </h3>
-              <h3 className="text-lg font-black text-black">
+              <h3 className="text-base  text-black">
                 welcome to the community
               </h3>
             </div>

@@ -58,10 +58,13 @@ export default function SignInPage() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // Validate form inputs
     const newErrors = {};
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = 'Email is not valid.';
     }
     if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
@@ -107,7 +110,7 @@ export default function SignInPage() {
             <Lottie animationData={done} className="  w-20 -mt-4 mx-auto" />
             <div className="mx-auto mb-4">
               <h3 className="text-lg  text-green-500">Awesome</h3>
-              <h3 className="  text-black text-sm">
+              <h3 className="text-black text-sm">
                 Congratulations! <br /> You're now part of our community. <br />
                 Let the adventure begin
               </h3>

@@ -54,10 +54,10 @@ export default function GoogleAuth() {
           <div className="text-center ">
             <Lottie animationData={done} className=" w-40 mx-auto" />
             <div className="mx-auto my-4">
-              <h3 className="text-lg font-black text-green-400">
+              <h3 className="text-lg font-medium text-green-400">
                 Registration successfully done
               </h3>
-              <h3 className="text-lg font-black text-black">
+              <h3 className="text-base text-black">
                 welcome to the community
               </h3>
             </div>
