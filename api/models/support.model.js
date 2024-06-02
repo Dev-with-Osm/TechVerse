@@ -27,6 +27,9 @@ const supportSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+    },
   },
   { timestamps: true },
 );

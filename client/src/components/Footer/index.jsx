@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
         <div>
           <div className="social-icon">
-            <a href="#">
+            <a href="https://www.instagram.com/not_osm97/" target="_blank">
               <FaInstagram />
             </a>
             <a href="#">

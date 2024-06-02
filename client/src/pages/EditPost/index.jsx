@@ -162,7 +162,7 @@ export default function EditPost() {
   };
 
   return (
-    <main className="p-3 max-w-4xl h-screen mx-auto">
+    <main className="p-4 max-w-4xl h-full mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Edit Post:</h1>
       <form
         onSubmit={handleSubmitPost}

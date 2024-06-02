@@ -148,7 +148,7 @@ export default function UserActions() {
               </button>
             </div>
           ) : (
-            <div className="flex items-center justify-center  flex-col rounded-md gap-1 border-white border backdrop-blur-xl p-2">
+            <div className="flex items-center justify-center flex-col rounded-md gap-1 border-white border backdrop-blur-xl p-2">
               <Link
                 onClick={handleCloseMenu}
                 to={'/sign-in'}

@@ -155,7 +155,7 @@ export default function PostPage({ postId }) {
         )}
         {post && (
           <div className=" flex flex-col gap-10 justify-center items-center md:items-start h-full md:flex-row px-2">
-            <div className="bg-[#1B1C1C] mt-9 p-4 border rounded-md flex flex-col gap-4  w-full h-fit">
+            <div className="bg-[#1B1C1C] md:mt-4 p-4 border rounded-md flex flex-col gap-4  w-full h-fit">
               <div className="md:px-4 flex items-start gap-4">
                 <div className="flex items-center gap-2 ">
                   <div className="w-8 h-8">
