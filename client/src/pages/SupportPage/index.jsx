@@ -124,7 +124,7 @@ export default function SupportPage() {
       <div className="flex  flex-col-reverse md:flex-row gap-3 p-4">
         <div className="bg-[#181919] border border-white rounded-md p-2 flex w-full justify-center">
           <form onSubmit={onSubmit} className="p-4 flex w-full flex-col gap-5">
-            <div className="flex flex-col md:flex-row justify-between gap-3">
+            <div className="flex flex-col md:flex-row justify-between gap-5">
               <div className="flex justify-center gap-2 flex-col w-full">
                 <FromLabel title="First Name" />
                 <div>
@@ -170,7 +170,7 @@ export default function SupportPage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row justify-between gap-3">
+            <div className="flex flex-col md:flex-row justify-between gap-5">
               <div className="flex justify-center gap-2 flex-col w-full">
                 <FromLabel title="Email Address" />
                 <div>
@@ -273,14 +273,14 @@ export default function SupportPage() {
           </form>
         </div>
         <div className="bg-[#FEF2DD] border-white border rounded-md relative text-black p-2 flex flex-col gap-5 w-full">
-          <div className="flex flex-col gap-1 absolute top-0 z-30">
+          <div className="flex flex-col gap-1 md:absolute top-0 z-30">
             <div className="flex justify-center mt-5 w-full">
               <h1 className="text-2xl font-medium">Contact us</h1>
             </div>
             <div className="w-4/5 flex mx-auto">
               <h5 className="text-center font-medium">
-                Fill out the form and our Support Manager will reach you withing
-                24 hours.
+                Fill out the form <span className="md:hidden">Bellow</span> and
+                our Support Manager will reach you withing 24 hours.
               </h5>
             </div>
           </div>
