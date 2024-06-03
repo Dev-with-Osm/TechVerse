@@ -251,6 +251,7 @@ export default function EditPost() {
                         opacity: 0.5,
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'cover',
+                        backgroundPosition: 'center',
                       }}
                     ></div>
                     <div className="absolute flex items-center justify-center flex-col">

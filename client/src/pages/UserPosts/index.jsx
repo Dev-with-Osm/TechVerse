@@ -19,20 +19,19 @@ export default function UserPosts() {
   useEffect(() => {
     document.title = 'TechVerse - My Posts';
 
-    const fetchUserPosts = async () => {
-      try {
-        const res = await fetch(`/api/user/posts/${currentUser?._id}`);
-        const data = await res.json();
-        setUserPosts(data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
     fetchUserPosts();
   }, [currentUser?._id]);
+  const fetchUserPosts = async () => {
+    try {
+      const res = await fetch(`/api/user/posts/${currentUser?._id}`);
+      const data = await res.json();
+      setUserPosts(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
   const handleDeleteClick = async (id) => {
     try {
@@ -41,24 +40,28 @@ export default function UserPosts() {
       });
       const data = await res.json();
 
-      if (!data.success) {
+      if (data.success === false) {
         console.error(data);
         return;
       }
-
       setShowPopup(false);
-      setUserPosts((prev) => prev.filter((post) => post._id !== id));
-      toast.success('Post deleted successfully!', {
-        duration: 2000,
-        position: 'bottom-right',
-        style: {
-          borderRadius: '10px',
-          fontSize: '14px',
-        },
-      });
+      notify();
+      fetchUserPosts();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const notify = () => {
+    toast('Post deleted successfully!', {
+      icon: <BsTrash className="text-red-500 text-xl" />,
+      duration: 2000,
+      position: 'bottom-right',
+      style: {
+        borderRadius: '10px',
+        fontSize: '14px',
+      },
+    });
   };
 
   const handleDeletePost = (postId) => {
@@ -67,13 +70,14 @@ export default function UserPosts() {
   };
 
   return (
-    <div className="flex flex-col justify-center h-screen items-center -mt-20">
+    <div className="flex flex-col  h-screen  ">
+      <h1 className="text-center text-2xl">My posts</h1>
       {loading ? (
         <div className="h-screen flex items-center justify-center -mt-20">
           <Loader />
         </div>
       ) : userPosts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-y-8 md:gap-x-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-5 gap-5 md:gap-y-8 md:gap-x-16">
           {userPosts.map((post) => (
             <div key={post._id}>
               <div
@@ -87,6 +91,7 @@ export default function UserPosts() {
                     backgroundImage: `url(${post.image})`,
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
                   }}
                 ></Link>
                 <div className="px-2">

@@ -4,10 +4,6 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const Post = require('../models/post.model.js');
 
-const test = asyncHandler(async (req, res) =>
-  res.status(200).json({ message: 'User route works' }),
-);
-
 const updateUser = asyncHandler(async (req, res) => {
   try {
     if (req.user.id !== req.params.id) {
@@ -41,16 +37,17 @@ const updateUser = asyncHandler(async (req, res) => {
 
 const getUserPosts = asyncHandler(async (req, res) => {
   try {
+    if (!req.user.id) return res.status(401).json('You need to login first');
     if (req.user.id !== req.params.id) {
+      res
+        .json({ error: 'You are not authorized to get this user posts' })
+        .status(401);
       throw new Error('You are not authorized to get this user posts');
     }
-
     const userPosts = await Post.find({ authorId: req.user.id });
-
     res.status(200).json(userPosts);
   } catch (error) {
     throw new Error(error);
   }
 });
-
-module.exports = { updateUser, getUserPosts, test };
+module.exports = { updateUser, getUserPosts };

@@ -23,12 +23,10 @@ export default function SignInPage() {
   const { error, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
-  console.log(showPopup);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  // console.log(formData);
   const [errors, setErrors] = useState({
     email: '',
     password: '',

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoLockClosedOutline, IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineMailOutline } from 'react-icons/md';
-
 import { PiEyeLight, PiEyeSlash } from 'react-icons/pi';
-
 import handWave from '../../../assets/animations/Animation - 1713426469054.json';
 import done from '../../../assets/animations/Animation - 17135345566734.json';
 import Lottie from 'lottie-react';
@@ -31,7 +29,6 @@ export default function SignUpPage() {
     password: '',
     confirmPassword: '',
   });
-  // console.log(formData);
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',

@@ -85,8 +85,13 @@ export default function PostItem({ PostItem, id }) {
       >
         <Link
           to={`/post/${id}`}
-          className="w-full h-[200px] bg-cover rounded-lg"
-          style={{ backgroundImage: `Url(${post.image})` }}
+          className="w-full h-[200px] rounded-lg"
+          style={{
+            backgroundImage: `Url(${post.image})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
         ></Link>
         <div className="px-2">
           <div className="flex flex-col gap-2">

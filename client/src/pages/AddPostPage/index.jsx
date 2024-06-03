@@ -79,7 +79,6 @@ export default function AddPost() {
         console.log(data.message);
       }
       navigate(`/post/${data._id}`);
-      console.log(data);
     }
   };
 
@@ -261,6 +260,7 @@ export default function AddPost() {
                       backgroundImage: `url(${formData.image})`,
                       backgroundSize: 'cover',
                       backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center',
                     }}
                   ></div>
                 )}
