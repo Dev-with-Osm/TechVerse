@@ -8,7 +8,8 @@ import { AiOutlineThunderbolt } from 'react-icons/ai';
 import { BsHandThumbsUp } from 'react-icons/bs';
 import MostLikedPosts from './components/MostLikedPosts';
 import RecentPosts from './components/RecentPosts';
-import { LuCalendarClock } from 'react-icons/lu';
+import { LuCalendarClock, LuMessagesSquare } from 'react-icons/lu';
+import Faq from './components/FAQ';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -69,6 +70,17 @@ export default function HomePage() {
               </h1>
             </div>
             <RecentPosts />
+          </div>
+          <div className=" mb-10 mt-20">
+            <div className=" flex items-center justify-center mb-5 ">
+              <h1 className="text-center text-3xl flex items-center gap-2">
+                <span>
+                  <LuMessagesSquare className="text-xl" />
+                </span>
+                FAQ
+              </h1>
+            </div>
+            <Faq />
           </div>
         </>
       )}
