@@ -30,7 +30,12 @@ export default function Profile() {
   const [filePercentage, setfilePercentage] = useState(0);
   const [fileError, setFileError] = useState(false);
   const { loading, error, currentUser } = useSelector((state) => state.user);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    email: currentUser.email,
+    avatar: currentUser.avatar,
+  });
 
   const [errors, setErrors] = useState({
     firstName: '',
@@ -87,13 +92,11 @@ export default function Profile() {
     // Validate form inputs
     const newErrors = {};
 
-    // if (!formData.email.trim()) {
-    //   newErrors.email = 'Email is required';
-    // } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-    //   newErrors.email = 'Invalid email address';
-    // }
-
-    //! need to fix this.
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email address';
+    }
 
     setErrors(newErrors);
 
@@ -216,7 +219,6 @@ export default function Profile() {
                   }`}
                   placeholder="First Name"
                   name="firstName"
-                  defaultValue={currentUser?.firstName}
                   value={formData.firstName}
                   onChange={handleInputChange}
                 />
@@ -238,7 +240,6 @@ export default function Profile() {
                     errors.lastName && 'border-red-500'
                   }`}
                   placeholder="Last Name"
-                  defaultValue={currentUser?.lastName}
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
@@ -261,7 +262,6 @@ export default function Profile() {
                   errors.email && 'border-red-500'
                 }`}
                 name="email"
-                defaultValue={currentUser?.email}
                 value={formData.email}
                 onChange={handleInputChange}
               />
@@ -270,7 +270,7 @@ export default function Profile() {
               )}
             </div>
           </div>
-          <div className="flex justify-center gap-2 flex-col">
+          {/* <div className="flex justify-center  gap-2 flex-col">
             <FromLabel title={'Password'} />
             <div className="relative">
               <IoLockClosedOutline className="absolute text-lg mt-3.5 ml-3" />
@@ -296,7 +296,7 @@ export default function Profile() {
                 <p className="text-red-500 text-xs mt-1">{errors.password}</p>
               )}
             </div>
-          </div>
+          </div> */}
 
           <div className="mt-2 flex gap-3 flex-col">
             <button
