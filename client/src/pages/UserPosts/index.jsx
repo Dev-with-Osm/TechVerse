@@ -70,7 +70,7 @@ export default function UserPosts() {
   };
 
   return (
-    <div className="flex flex-col h-full py-4 ">
+    <div className="flex flex-col h-full py-4 md:h-screen ">
       <h1 className="text-center text-2xl ">My posts</h1>
       {loading ? (
         <div className="h-screen flex items-center justify-center -mt-20">

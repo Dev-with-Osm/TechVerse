@@ -29,7 +29,7 @@ export default function Statistics() {
             </h1>
           </div>
 
-          <p className="text-xl font-medium">posts</p>
+          <p className="text-xl font-medium">post</p>
         </div>
       </div>
       <div className="flex flex-col">
@@ -41,7 +41,7 @@ export default function Statistics() {
             </h1>
           </div>
 
-          <p className="text-xl font-medium">tag</p>
+          <p className="text-xl font-medium">hashtag</p>
         </div>
       </div>
     </div>
