@@ -70,14 +70,14 @@ export default function UserPosts() {
   };
 
   return (
-    <div className="flex flex-col  h-screen  ">
-      <h1 className="text-center text-2xl">My posts</h1>
+    <div className="flex flex-col h-full py-4 ">
+      <h1 className="text-center text-2xl ">My posts</h1>
       {loading ? (
         <div className="h-screen flex items-center justify-center -mt-20">
           <Loader />
         </div>
       ) : userPosts.length > 0 ? (
-        <div className="flex flex-col md:items-start items-center">
+        <div className="flex flex-col items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-5 gap-5 md:gap-y-8 md:gap-x-16">
             {userPosts.map((post) => (
               <div key={post._id}>
