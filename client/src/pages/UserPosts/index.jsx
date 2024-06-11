@@ -77,52 +77,54 @@ export default function UserPosts() {
           <Loader />
         </div>
       ) : userPosts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-5 gap-5 md:gap-y-8 md:gap-x-16">
-          {userPosts.map((post) => (
-            <div key={post._id}>
-              <div
-                className="w-[300px] h-[370px] cursor-pointer relative p-1 pb-3 rounded-md bg-[#1B1C1C] shadow-white border flex flex-col gap-3"
-                style={{ boxShadow: 'rgba(149, 157, 165, 0.1) 0px 8px 24px' }}
-              >
-                <Link
-                  to={`/post/${post._id}`}
-                  className="w-full h-[200px] rounded-md"
-                  style={{
-                    backgroundImage: `url(${post.image})`,
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center',
-                  }}
-                ></Link>
-                <div className="px-2">
-                  <div className="flex flex-col gap-2">
-                    <h2 className="text-sm line-clamp-2">{post.title}</h2>
-                    <p className="text-[11px] line-clamp-3 text-white/85">
-                      {post.body}
-                    </p>
+        <div className="flex flex-col md:items-start items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-5 gap-5 md:gap-y-8 md:gap-x-16">
+            {userPosts.map((post) => (
+              <div key={post._id}>
+                <div
+                  className="w-[300px] h-[370px] cursor-pointer relative p-1 pb-3 rounded-md bg-[#1B1C1C] shadow-white border flex flex-col gap-3"
+                  style={{ boxShadow: 'rgba(149, 157, 165, 0.1) 0px 8px 24px' }}
+                >
+                  <Link
+                    to={`/post/${post._id}`}
+                    className="w-full h-[200px] rounded-md"
+                    style={{
+                      backgroundImage: `url(${post.image})`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center',
+                    }}
+                  ></Link>
+                  <div className="px-2">
+                    <div className="flex flex-col gap-2">
+                      <h2 className="text-sm line-clamp-2">{post.title}</h2>
+                      <p className="text-[11px] line-clamp-3 text-white/85">
+                        {post.body}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="absolute bottom-0 w-full pr-4 py-2 pl-2">
-                  <div className="flex justify-center items-center gap-5">
-                    <Link
-                      to={`/edit-post/${post._id}`}
-                      className="border border-green-500 w-24 flex items-center justify-center gap-1 py-1 rounded-md hover:bg-green-500 transition ease-in-out duration-150"
-                    >
-                      <FiEdit />
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDeletePost(post._id)}
-                      className="border border-red-500 flex items-center justify-center gap-1 w-24 py-1 rounded-md hover:bg-red-500 transition ease-in-out duration-150"
-                    >
-                      <BsTrash />
-                      Delete
-                    </button>
+                  <div className="absolute bottom-0 w-full pr-4 py-2 pl-2">
+                    <div className="flex justify-center items-center gap-5">
+                      <Link
+                        to={`/edit-post/${post._id}`}
+                        className="border border-green-500 w-24 flex items-center justify-center gap-1 py-1 rounded-md hover:bg-green-500 transition ease-in-out duration-150"
+                      >
+                        <FiEdit />
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDeletePost(post._id)}
+                        className="border border-red-500 flex items-center justify-center gap-1 w-24 py-1 rounded-md hover:bg-red-500 transition ease-in-out duration-150"
+                      >
+                        <BsTrash />
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
         <h1 className="text-2xl text-white/80">No Posts</h1>
