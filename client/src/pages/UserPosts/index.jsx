@@ -127,7 +127,9 @@ export default function UserPosts() {
           </div>
         </div>
       ) : (
-        <h1 className="text-2xl text-white/80">No Posts</h1>
+        <div className="h-screen">
+          <h1 className="text-2xl  text-white/80">No Posts</h1>
+        </div>
       )}
       {showPopup && (
         <LogoutModal open={showPopup} onClose={() => setShowPopup(false)}>
